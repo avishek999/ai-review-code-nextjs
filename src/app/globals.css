@@ -19,7 +19,6 @@
   --warning-background-color: #353532;
   --success-text-color: #10b981;
   --success-background-color: #323532;
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,6 +29,9 @@
 }
 
 body {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
   color: var(--foreground);
   background: var(--primary-background-color);
   font-family: Arial, Helvetica, sans-serif;
