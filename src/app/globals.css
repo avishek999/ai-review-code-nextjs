@@ -5,7 +5,8 @@
 :root {
   --primary-color: #4f46e5;
   --secondary-color: #7c3aed;
-  --accent-color: #1d193d;
+  --accent-color1: #1d193d;
+  --accent-color2: #242a4d;
   --primary-background-color: #111825;
   --secondary-background-color: #1f2937;
   --primary-text-color: #e9ebed;
