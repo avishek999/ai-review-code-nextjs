@@ -1,3 +1,4 @@
+/** user defined component */
 import LandingPage from "./components/landingPage/LandingPage";
 import Navbar from "./components/navbar/Navbar";
 
