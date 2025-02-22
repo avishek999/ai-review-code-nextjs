@@ -70,7 +70,7 @@ const LandingPage: React.FC = () => {
       {/* Hero section starts  */}
       <div
         ref={containerRef}
-        className="w-full md:h-[calc(100%-76.8px)] h-[75%] flex justify-center flex-col items-center"
+        className="w-full  h-[75%] flex justify-center flex-col items-center"
       >
         <h1
           ref={titleRef}
