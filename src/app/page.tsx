@@ -1,4 +1,5 @@
 /** user defined component */
+import Footer from "./components/footer/Footer";
 import LandingPage from "./components/landingPage/LandingPage";
 import Navbar from "./components/navbar/Navbar";
 
@@ -7,6 +8,7 @@ export default function Home() {
     <div className="w-full h-full">
       <Navbar />
       <LandingPage />
+      <Footer />
     </div>
   );
 }

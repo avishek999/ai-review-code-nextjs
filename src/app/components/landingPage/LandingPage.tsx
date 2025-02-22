@@ -12,6 +12,7 @@ import SecondaryButton from "../buttons/SecondaryButton";
 import Card1 from "../cards/Card1";
 import { BiSolidError } from "react-icons/bi";
 import { Editor, useMonaco } from "@monaco-editor/react";
+import Cta from "../cta/Cta";
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */
@@ -56,11 +57,12 @@ const LandingPage: React.FC = () => {
   }, [monaco]);
   /** ================== useEffect end ================== */
 
-  const code = `function calculateTotal(numbers) {
+  const code = `function calculateTotal(items) {
   int total = 0;
   for(int items of items){
   total += items.price;
   }
+  return total;
 }
   `;
   return (
@@ -109,42 +111,51 @@ const LandingPage: React.FC = () => {
         {/* compiler section starts */}
 
         <div className="  p-12  bg-[var(--secondary-background-color)]">
-          <div className="bg-[#1f2937] flex gap-4 ">
-            <div className="w-[75%] bg-[var(--primary-background-color)] rounded pt-4">
-              <Editor
-                height="143px"
-                defaultLanguage="javascript"
-                defaultValue={code}
-                theme="CustomTheme"
-                options={{
-                  minimap: { enabled: false },
-                  readOnly: true,
-                }}
-              />
+          <div className="bg-[#1F2937] border rounded-3xl border-gray-700   ">
+            <div className="flex gap-2 px-5 py-3">
+              <div className="p-[6px] rounded-full bg-red-500 w-fit"></div>
+              <div className="p-[6px] rounded-full bg-yellow-500 w-fit"></div>
+              <div className="p-[6px] rounded-full bg-green-500 w-fit"></div>
             </div>
-
-            <div>
-              <div className="p-3 bg-[var(--error-background-color)] rounded-md">
-                <div className="text-[var(--error-text-color)] text-sm  flex items-center gap-1">
-                  {" "}
-                  <BiSolidError /> Error
-                </div>
-                <p className="text-[13px]">
-                  Missing null check for items Parameters{" "}
-                </p>
+            <div className="flex gap-4 ">
+              <div className="w-[75%] bg-[var(--primary-background-color)] rounded pt-4">
+                <Editor
+                  height="149px"
+                  defaultLanguage="javascript"
+                  defaultValue={code}
+                  theme="CustomTheme"
+                  options={{
+                    minimap: { enabled: false },
+                    readOnly: true,
+                  }}
+                />
               </div>
-              <div className="p-3 bg-[var(--warning-background-color)] rounded-md mt-4">
-                <div className="text-[var(--warning-text-color)] text-sm  flex items-center gap-1">
-                  ! warning
+
+              <div>
+                <div className="p-3 bg-[var(--error-background-color)] rounded-md">
+                  <div className="text-[var(--error-text-color)] text-sm  flex items-center gap-1">
+                    <BiSolidError /> Error
+                  </div>
+                  <p className="text-[13px]">
+                    Missing null check for items Parameters
+                  </p>
                 </div>
-                <p className="text-[13px]">
-                  Consider using reduce() for performance
-                </p>
+                <div className="p-3 bg-[var(--warning-background-color)] rounded-md mt-4">
+                  <div className="text-[var(--warning-text-color)] text-sm  flex items-center gap-1">
+                    ! Warning
+                  </div>
+                  <p className="text-[13px]">
+                    Consider using reduce() for performance
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {/* Cta section starts */}
+
+      <Cta />
     </>
   );
 };
