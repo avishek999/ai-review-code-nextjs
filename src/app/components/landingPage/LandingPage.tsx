@@ -70,15 +70,15 @@ const LandingPage: React.FC = () => {
       {/* Hero section starts  */}
       <div
         ref={containerRef}
-        className="w-full h-[calc(100%-76.8px)] flex justify-center flex-col items-center"
+        className="w-full md:h-[calc(100%-76.8px)] h-[75%] flex justify-center flex-col items-center"
       >
         <h1
           ref={titleRef}
-          className="text-6xl font-bold text-center flex  items-end"
+          className="md:text-6xl text-4xl font-bold text-center flex  items-end"
         >
-          AI-Powered Code Reviews for <br /> Modern Development id
+          AI-Powered Code Reviews for <br /> Modern Development
         </h1>
-        <p className="text-[var(--secondary-text-color)] mt-4 text-center">
+        <p className="text-[var(--secondary-text-color)] mt-4 text-center text-sm md:text-md">
           Enhance your Code quality with Real-time AI Suggestions, automation
           reviews and intelligent feedback
         </p>
@@ -88,9 +88,9 @@ const LandingPage: React.FC = () => {
           <SecondaryButton title="Documentation" href="/documentation" />
         </div>
       </div>
-      <div className="h-full w-full flex flex-col gap-20">
+      <div className=" w-full flex flex-col gap-20  overflow-x-hidden">
         {/* Card section starts */}
-        <div className="  flex items-center justify-center gap-5  ">
+        <div className="  flex items-center justify-center gap-5  flex-col   md:flex-row ">
           <Card1
             title="Intelligent Code Analysis"
             description="AI-powered syntax and error detection with support for multiple languages and frameworks."
@@ -110,15 +110,15 @@ const LandingPage: React.FC = () => {
 
         {/* compiler section starts */}
 
-        <div className="  p-12  bg-[var(--secondary-background-color)]">
+        <div className="px-5 py-12  md:p-12  bg-[var(--secondary-background-color)]">
           <div className="bg-[#1F2937] border rounded-3xl border-gray-700   ">
             <div className="flex gap-2 px-5 py-3">
               <div className="p-[6px] rounded-full bg-red-500 w-fit"></div>
               <div className="p-[6px] rounded-full bg-yellow-500 w-fit"></div>
               <div className="p-[6px] rounded-full bg-green-500 w-fit"></div>
             </div>
-            <div className="flex gap-4 ">
-              <div className="w-[75%] bg-[var(--primary-background-color)] rounded pt-4">
+            <div className="flex flex-col md:flex-row md:gap-4 gap-8 ">
+              <div className="md:w-[75%] bg-[var(--primary-background-color)] rounded pt-4">
                 <Editor
                   height="149px"
                   defaultLanguage="javascript"

@@ -26,12 +26,14 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-4 gap-8">
           {footerLinks.map((item, index) => (
             <div key={index}>
-              <h3 className="font-bold mb-2">{item.title}</h3>
+              <h3 className="font-bold mb-2 text-sm md:text-md">
+                {item.title}
+              </h3>
               <ul className="space-y-1">
                 {item.links.map((link, i) => (
                   <li
                     key={i}
-                    className="text-gray-400 hover:text-white cursor-pointer"
+                    className="text-gray-400 text-sm md:text-md hover:text-white cursor-pointer tex-wrap"
                   >
                     {link}
                   </li>
