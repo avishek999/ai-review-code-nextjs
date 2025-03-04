@@ -9,11 +9,15 @@
   --accent-color2: #242a4d;
   --primary-background-color: #111825;
   --secondary-background-color: #1f2937;
+  --third-background-color: #374151;
+
   --primary-text-color: #e9ebed;
   --secondary-text-color: #6e7683;
+  --third-text-color: #677b83;
+
   --icon-color: #656ec7;
 
-  --primary-white-color: #fffff;
+  --primary-white-color: #1f2937;
   --primary-black-color: #0000;
   --error-text-color: #e25850;
   --error-background-color: #342c38;
@@ -38,3 +42,6 @@ body {
   background: var(--primary-background-color);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* https: ; //coolors.co/374151-111827-1f2937-1f2937-fefefe */
+

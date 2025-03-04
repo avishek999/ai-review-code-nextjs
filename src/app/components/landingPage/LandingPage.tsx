@@ -70,7 +70,8 @@ const LandingPage: React.FC = () => {
       {/* Hero section starts  */}
       <div
         ref={containerRef}
-        className="w-full  h-[75%] flex justify-center flex-col items-center"
+        // bg-[url('/Images/home-page/models.svg')] bg-no-repeat bg-start
+        className="w-full  h-[75%] flex justify-center flex-col items-center "
       >
         <h1
           ref={titleRef}
