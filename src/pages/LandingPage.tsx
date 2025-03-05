@@ -7,12 +7,14 @@ import { gsap } from "gsap";
 import { FaBug, FaCode, FaRobot } from "react-icons/fa6";
 
 /** user defined component */
-import PrimaryButton from "../buttons/PrimaryButton";
-import SecondaryButton from "../buttons/SecondaryButton";
-import Card1 from "../cards/Card1";
+
 import { BiSolidError } from "react-icons/bi";
 import { Editor, useMonaco } from "@monaco-editor/react";
-import Cta from "../cta/Cta";
+import PrimaryButton from "@/components/buttons/PrimaryButton";
+import SecondaryButton from "@/components/buttons/SecondaryButton";
+import Card1 from "@/components/cards/Card1";
+import Cta from "@/components/cta/Cta";
+
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */

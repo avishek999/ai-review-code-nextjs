@@ -1,7 +1,9 @@
 /** user defined component */
-import Footer from "./components/footer/Footer";
-import LandingPage from "./components/landingPage/LandingPage";
-import Navbar from "./components/navbar/Navbar";
+
+import Footer from "@/components/footer/Footer";
+import Navbar from "@/components/navbar/Navbar";
+import LandingPage from "@/pages/LandingPage";
+
 
 export default function Home() {
   return (
