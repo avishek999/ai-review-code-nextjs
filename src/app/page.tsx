@@ -2,8 +2,7 @@
 
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
-import LandingPage from "@/pages/LandingPage";
-
+import LandingPage from "@/layouts/LandingPage";
 
 export default function Home() {
   return (
