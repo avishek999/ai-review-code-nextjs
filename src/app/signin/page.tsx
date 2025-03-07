@@ -4,8 +4,14 @@ import { CLIENT_ID } from "@/services/config";
 import React, { useEffect, useState } from "react";
 import { FaCode, FaGithub } from "react-icons/fa6";
 
+enum AuthModeEnum {
+  SignIn = "signin",
+  SignUp = "signup",
+  ForgetPassword = "forgetPassword",
+}
+
 const Signin: React.FC = () => {
-  const [authMode, setAuthMode] = useState(true);
+  const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
 
   const getGithubCode = () => {
     window.location.assign(
@@ -48,7 +54,7 @@ const Signin: React.FC = () => {
 
         <div>
           <form className="max-w-md mx-auto  rounded-lg shadow-md space-y-6 mt-5">
-            {authMode && (
+            {authMode === AuthModeEnum.SignUp && (
               <div>
                 <label className="block text-sm font-medium text-[var(--primary-text-color)]">
                   Full Name
@@ -82,7 +88,23 @@ const Signin: React.FC = () => {
               />
             </div>
 
-            <div className="text-[var(--primary-color)] text-[12px] text-end cursor-pointer">
+            {authMode === AuthModeEnum.ForgetPassword && (
+              <div>
+                <label className="block text-sm font-medium text-[var(--primary-text-color)]">
+                  OTP
+                </label>
+                <input
+                  type="number"
+                  placeholder="Enter your OTP"
+                  className="mt-1 w-full px-4 py-2 placeholder:text-sm   bg-[var(--third-background-color)] outline-none  rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                />
+              </div>
+            )}
+
+            <div
+              onClick={() => setAuthMode(AuthModeEnum.ForgetPassword)}
+              className="text-[var(--primary-color)] text-[12px] text-end cursor-pointer"
+            >
               Forget password
             </div>
 
@@ -95,23 +117,18 @@ const Signin: React.FC = () => {
           </form>
         </div>
       </div>
-
-      <div className="text-center text-[14px]  mt-2">
-        Don&apos;t have an account?{" "}
-        {authMode ? (
+      <div className="text-center text-[14px] mt-2">
+        Already have an account?
+        {authMode === AuthModeEnum.SignUp ? (
           <span
-            onClick={() => {
-              setAuthMode((prev) => !prev);
-            }}
+            onClick={() => setAuthMode(AuthModeEnum.SignIn)}
             className="text-[var(--primary-color)] cursor-pointer"
           >
             Sign in
           </span>
         ) : (
           <span
-            onClick={() => {
-              setAuthMode((prev) => !prev);
-            }}
+            onClick={() => setAuthMode(AuthModeEnum.SignUp)}
             className="text-[var(--primary-color)] cursor-pointer"
           >
             Sign up
