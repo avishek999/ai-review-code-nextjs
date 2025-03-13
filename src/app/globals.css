@@ -24,7 +24,11 @@
   --error-text-color: #e25850;
   --error-background-color: #342c38;
   --warning-text-color: #f59e0b;
+  
   --warning-background-color: #353532;
+  --improvement-text-color: #60A5FA;
+  --improvement-background-color: #121C31;
+
   --success-text-color: #10b981;
   --success-background-color: #323532;
 }

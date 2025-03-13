@@ -1,6 +1,8 @@
 "use client";
 
+import ChatScreen from "@/components/chatScreen/ChatScreen";
 import Navbar from "@/components/navbar/Navbar";
+import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import React, { useEffect } from "react";
 
@@ -34,22 +36,28 @@ const Home: React.FC = () => {
     <>
       <Navbar />
       <div className="flex">
-        <div className="w-[20%] h-screen   bg-red-500 "></div>
-
-        <div className="w-[50%] h-screen   ">
-          <Editor
-            height="149px"
-            defaultLanguage="javascript"
-            defaultValue={code}
-            theme="CustomTheme"
-            options={{
-              minimap: { enabled: false },
-              readOnly: false,
-            }}
-          />
+        <div className="w-[20%] h-screen   ">
+          <SideBar />
         </div>
 
-        <div className="w-[30%] h-screen   bg-green-500 "></div>
+        <div className="w-[50%] h-screen p-5  bg-[#030712]  ">
+          <div className=" h-screen">
+            <Editor
+              height="100%"
+              defaultLanguage="javascript"
+              defaultValue={code}
+              theme="CustomTheme"
+              options={{
+                minimap: { enabled: false },
+                readOnly: false,
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="w-[30%] h-screen   ">
+          <ChatScreen />
+        </div>
       </div>
     </>
   );
