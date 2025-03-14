@@ -2,6 +2,7 @@ import React from "react";
 import { BsFillGearFill } from "react-icons/bs";
 import { FaCode } from "react-icons/fa6";
 import { MdHistory } from "react-icons/md";
+import AnimatedReviewButton from "../buttons/RunButton";
 
 const HomeNavBar = () => {
   return (
@@ -26,7 +27,9 @@ const HomeNavBar = () => {
           </div>
         </div>
       </div>
-      <div className="hidden md:flex  gap-5 items-center"></div>
+      <div className="hidden md:flex  gap-5 items-center">
+        <AnimatedReviewButton />
+      </div>
     </nav>
   );
 };
