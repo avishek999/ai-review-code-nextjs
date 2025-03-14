@@ -1,10 +1,10 @@
 "use client";
 
+import React, { useEffect } from "react";
 import ChatScreen from "@/components/chatScreen/ChatScreen";
-import Navbar from "@/components/navbar/Navbar";
 import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
-import React, { useEffect } from "react";
+import HomeNavBar from "@/components/navbar/HomeNavBar";
 
 const Home: React.FC = () => {
   const monaco = useMonaco();
@@ -32,16 +32,17 @@ const Home: React.FC = () => {
   return total;
 }
   `;
+
   return (
     <>
-      <Navbar />
-      <div className="flex">
-        <div className="w-[20%] h-screen   ">
+      <HomeNavBar />
+      <div className="flex h-[calc(100vh-76.8px)]">
+        <div className="w-[20%]    ">
           <SideBar />
         </div>
 
-        <div className="w-[50%] h-screen p-5  bg-[#030712]  ">
-          <div className=" h-screen">
+        <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
+          <div className=" h-full">
             <Editor
               height="100%"
               defaultLanguage="javascript"
@@ -55,7 +56,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-[30%] h-screen   ">
+        <div className="w-[25%]   ">
           <ChatScreen />
         </div>
       </div>

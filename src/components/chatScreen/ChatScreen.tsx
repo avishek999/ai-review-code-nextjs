@@ -5,7 +5,7 @@ import { TbXboxXFilled } from "react-icons/tb";
 
 const ChatScreen: React.FC = () => {
   return (
-    <div className="p-4 relative h-full w-full">
+    <div className="p-4 relative h-full w-full overflow-auto">
       {/* ===================== review overview  ===================== */}
 
       <div className="border-b border-[var(--secondary-text-color)] py-3">
