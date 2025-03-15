@@ -25,6 +25,8 @@ const Signin: React.FC = () => {
     const codeParam = urlParams.get("code");
     console.log(codeParam);
   }, []);
+
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4">
       <div className="text-xl md:text-3xl flex flex-col items-center gap-5 font-bold">
