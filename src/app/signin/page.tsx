@@ -1,5 +1,6 @@
 "use client";
 
+// import { loginViaEmail, sendVerifyOtp } from "@/services/api";
 import { CLIENT_ID } from "@/services/config";
 import React, { useEffect, useState } from "react";
 import { FaCode, FaGithub } from "react-icons/fa6";
@@ -26,6 +27,16 @@ const Signin: React.FC = () => {
     console.log(codeParam);
   }, []);
 
+  // useEffect(() => {
+  //   const payload = {
+  //     email: "simkumari780@gmail.com",
+  //     password: "1234567890",
+  //   };
+
+  //   // loginViaEmail(payload);
+
+    // sendVerifyOtp();
+  // }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4">

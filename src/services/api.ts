@@ -1,5 +1,6 @@
 import { IUser } from "@/interface/user";
 import { SERVER_URL } from "./config";
+import { ICodeReview } from "@/interface/code";
 
 /**----------------------- Auth api start ---------------------------- */
 
@@ -10,12 +11,14 @@ export const registerViaEmail = (payload: Partial<IUser>) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   })
     .then(async (response) => {
       const res = await response.json();
       if (response.status >= 400) {
         return Promise.reject(res);
       }
+      console.log("response", res.token);
       return res;
     })
     .catch((err) => {
@@ -23,28 +26,183 @@ export const registerViaEmail = (payload: Partial<IUser>) => {
     });
 };
 
-// export const registerViaEmail = async (
-//     payload: IUser
-//   ): Promise<IUserRegisterApiResponse<Partial<IUser>>> => {
-//     return await new Promise((resolve, reject) => {
-//       fetch(`${SERVER_URL}/auth/register`, {
-//         method: "POST",
-//         body: JSON.stringify(payload),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       })
-//         .then(async (response) => {
-//           const res = await response.json();
-//           if (response.status >= 400) {
-//             reject(res);
-//           }
-//           resolve(res);
-//         })
-//         .catch((err) => {
-//           reject(err);
-//         });
-//     });
-//   };
+export const loginViaEmail = (payload: Partial<IUser>) => {
+  return fetch(`${SERVER_URL}/api/auth/login`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const logoutUserAPi = () => {
+  return fetch(`${SERVER_URL}/api/auth/logout`, {
+    method: "POST",
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const sendVerifyOtp = () => {
+  return fetch(`${SERVER_URL}/api/auth/send-verify-otp`, {
+    method: "POST",
+
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const verifyOtp = (verifyOtp: Partial<IUser>) => {
+  return fetch(`${SERVER_URL}/api/auth/verify-account`, {
+    method: "POST",
+    body: JSON.stringify(verifyOtp),
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const sendResetOtp = (verifyOtp: Partial<IUser>) => {
+  return fetch(`${SERVER_URL}/api/auth/send-reset-otp`, {
+    method: "POST",
+    body: JSON.stringify(verifyOtp),
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const resetPassword = (verifyOtp: Partial<IUser>) => {
+  return fetch(`${SERVER_URL}/api/auth/reset-password`, {
+    method: "POST",
+    body: JSON.stringify(verifyOtp),
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+//  ! this will be post method for sending the code
+
+export const accessGithub = () => {
+  return fetch(`${SERVER_URL}/api/auth/get-access-token`, {
+    method: "GET",
+    body: JSON.stringify(verifyOtp),
+    headers: {
+      "content-Type": "application/json",
+    },
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
 
 /**----------------------- Auth api end ----------------------------- */
+
+/**----------------------- CodeReview api end ----------------------------- */
+
+export const sendCodeForReview = (payload: Partial<ICodeReview>) => {
+  return fetch(`${SERVER_URL}/api/codeReview/send-code-for-review`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "content-Type": "application/json",
+    },
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+/**----------------------- CodeReview api end ----------------------------- */
