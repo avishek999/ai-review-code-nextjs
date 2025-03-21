@@ -2,19 +2,17 @@
 /** core libraries & installed libraries */
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { Editor, useMonaco } from "@monaco-editor/react";
 
 /** Icons */
 import { FaBug, FaCode, FaRobot } from "react-icons/fa6";
+import { BiSolidError } from "react-icons/bi";
 
 /** user defined component */
-
-import { BiSolidError } from "react-icons/bi";
-import { Editor, useMonaco } from "@monaco-editor/react";
 import PrimaryButton from "@/components/buttons/PrimaryButton";
 import SecondaryButton from "@/components/buttons/SecondaryButton";
 import Card1 from "@/components/cards/Card1";
 import Cta from "@/components/cta/Cta";
-
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */

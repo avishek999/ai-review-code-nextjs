@@ -1,7 +1,7 @@
 export interface IUser {
   _id: string;
   email:string;
-  name: string;
+  name?: string;
   password: string;
   verifyOtp: string;
   verifyOtpExpireAt: number;

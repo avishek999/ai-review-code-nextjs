@@ -1,10 +1,13 @@
+import { iResponse } from "./../interface/common";
 import { IUser } from "@/interface/user";
 import { SERVER_URL } from "./config";
 import { ICodeReview } from "@/interface/code";
 
 /**----------------------- Auth api start ---------------------------- */
 
-export const registerViaEmail = (payload: Partial<IUser>) => {
+export const registerViaEmail = (
+  payload: Partial<IUser>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/register`, {
     method: "POST",
     body: JSON.stringify(payload),
@@ -26,7 +29,7 @@ export const registerViaEmail = (payload: Partial<IUser>) => {
     });
 };
 
-export const loginViaEmail = (payload: Partial<IUser>) => {
+export const loginViaEmail = (payload: Partial<IUser>): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/login`, {
     method: "POST",
     body: JSON.stringify(payload),
@@ -48,7 +51,7 @@ export const loginViaEmail = (payload: Partial<IUser>) => {
     });
 };
 
-export const logoutUserAPi = () => {
+export const logoutUserAPi = (): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/logout`, {
     method: "POST",
     headers: {
@@ -69,7 +72,7 @@ export const logoutUserAPi = () => {
     });
 };
 
-export const sendVerifyOtp = () => {
+export const sendVerifyOtp = (): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/send-verify-otp`, {
     method: "POST",
 
@@ -91,7 +94,7 @@ export const sendVerifyOtp = () => {
     });
 };
 
-export const verifyOtp = (verifyOtp: Partial<IUser>) => {
+export const verifyOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/verify-account`, {
     method: "POST",
     body: JSON.stringify(verifyOtp),
@@ -113,7 +116,7 @@ export const verifyOtp = (verifyOtp: Partial<IUser>) => {
     });
 };
 
-export const sendResetOtp = (verifyOtp: Partial<IUser>) => {
+export const sendResetOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/send-reset-otp`, {
     method: "POST",
     body: JSON.stringify(verifyOtp),
@@ -135,7 +138,7 @@ export const sendResetOtp = (verifyOtp: Partial<IUser>) => {
     });
 };
 
-export const resetPassword = (verifyOtp: Partial<IUser>) => {
+export const resetPassword = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/reset-password`, {
     method: "POST",
     body: JSON.stringify(verifyOtp),
@@ -159,7 +162,7 @@ export const resetPassword = (verifyOtp: Partial<IUser>) => {
 
 //  ! this will be post method for sending the code
 
-export const accessGithub = () => {
+export const accessGithub = (): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/get-access-token`, {
     method: "GET",
     body: JSON.stringify(verifyOtp),
