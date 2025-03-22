@@ -10,7 +10,7 @@ import { FaCode, FaGithub } from "react-icons/fa6";
 
 /** services */
 import { CLIENT_ID } from "@/services/config";
-import { loginViaEmail, registerViaEmail } from "@/services/api";
+import { loginViaEmail, registerViaEmail, sendVerifyOtp } from "@/services/api";
 
 /** interfaces */
 import { IUser } from "@/interface/user";
@@ -25,7 +25,8 @@ enum AuthModeEnum {
 const Signin: React.FC = () => {
   /** ================== useState start ================== */
   const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
-  const [testOtp, settestOtp] = useState(false);
+  const [isOtpSuccess, setIsOtpSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   /** ================== useState end ================== */
 
@@ -52,10 +53,23 @@ const Signin: React.FC = () => {
   const onAuthSubmit = async (data: IUser) => {
     if (authMode === AuthModeEnum.SignIn) {
       delete data.name;
+      try {
+        const response = await loginViaEmail(data);
 
-      const response = await loginViaEmail(data);
-      console.log(response);
-      console.log(data);
+        if (response.status === true) {
+          if (response.isAccountVerified === true) {
+            // redirect
+          } else {
+            setIsOtpSuccess(true);
+          }
+        } else {
+          console.log(response.status);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
 
       return;
     }
@@ -65,13 +79,20 @@ const Signin: React.FC = () => {
       return;
     }
 
+    setLoading(true);
     const response = await registerViaEmail(data);
 
-    if (response.status === true) {
-      console.log(response.status);
-      console.log(data);
-    } else {
-      console.log(response.status);
+    try {
+      if (response.status === true) {
+        setLoading(false);
+        setIsOtpSuccess(true);
+        sendVerifyOtp();
+      } else {
+        console.log(response.status);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -87,7 +108,7 @@ const Signin: React.FC = () => {
     <div className="min-h-screen flex flex-col justify-center items-center p-4">
       <div className="text-xl md:text-3xl flex flex-col items-center gap-5 font-bold">
         <FaCode size={45} className=" text-[var(--icon-color)]" />
-        <div className="text-center" onClick={() => settestOtp(!testOtp)}>
+        <div className="text-center">
           CodeReviewAI
           <div className="text-sm font-normal text-[var(--secondary-text-color)]">
             Your intelligent review assistant
@@ -95,10 +116,20 @@ const Signin: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-6 bg-[var(--secondary-background-color)] rounded-md mt-5 max-w-sm w-full  flex overflow-hidden ">
+      <div
+        className={`relative  p-6 bg-[var(--secondary-background-color)] rounded-md mt-5 max-w-sm w-full  flex overflow-hidden  ${
+          loading ? "opacity-75" : ""
+        } `}
+      >
+        <div
+          className={`absolute w-[30px] h-[5px] rounded-2xl top-0 left-0 bg-[var(--primary-color)] animate-loading  ${
+            loading ? "block" : "hidden"
+          }  `}
+        ></div>
+
         <div
           className={` transition-all flex-none w-full ${
-            testOtp ? "translate-x-[-500px]" : ""
+            isOtpSuccess ? "translate-x-[-500px]" : ""
           }  `}
         >
           <div
@@ -182,7 +213,7 @@ const Signin: React.FC = () => {
                   </label>
                   <input
                     type="number"
-                    {...register("verifyOtp", {
+                    {...register("otp", {
                       required: {
                         value: false,
                         message: "otp is required",
@@ -191,7 +222,7 @@ const Signin: React.FC = () => {
                     placeholder="Enter your OTP"
                     className="mt-1 w-full px-4 py-2 placeholder:text-sm   bg-[var(--third-background-color)] outline-none  rounded-md focus:ring focus:ring-[var(--primary-color)]"
                   />
-                  <div>{errors.verifyOtp?.message}</div>
+                  <div>{errors.otp?.message}</div>
                 </div>
               )}
 
@@ -213,31 +244,32 @@ const Signin: React.FC = () => {
         </div>
         <div
           className={`transition-all  ${
-            testOtp ? "translate-x-[-330px]" : "translate-x-[200px]"
+            isOtpSuccess ? "translate-x-[-330px]" : "translate-x-[200px]"
           } `}
         >
-          <OtpVerification />
+          <OtpVerification setLoading={setLoading} />
         </div>
       </div>
-
-      <div className="text-center text-[14px] mt-2">
-        Already have an account?
-        {authMode === AuthModeEnum.SignUp ? (
-          <span
-            onClick={() => setAuthMode(AuthModeEnum.SignIn)}
-            className="text-[var(--primary-color)] cursor-pointer"
-          >
-            Sign in
-          </span>
-        ) : (
-          <span
-            onClick={() => setAuthMode(AuthModeEnum.SignUp)}
-            className="text-[var(--primary-color)] cursor-pointer"
-          >
-            Sign up
-          </span>
-        )}
-      </div>
+      {!isOtpSuccess && (
+        <div className="text-center text-[14px] mt-2">
+          Already have an account?
+          {authMode === AuthModeEnum.SignUp ? (
+            <span
+              onClick={() => setAuthMode(AuthModeEnum.SignIn)}
+              className="text-[var(--primary-color)] cursor-pointer"
+            >
+              Sign in
+            </span>
+          ) : (
+            <span
+              onClick={() => setAuthMode(AuthModeEnum.SignUp)}
+              className="text-[var(--primary-color)] cursor-pointer"
+            >
+              Sign up
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 };

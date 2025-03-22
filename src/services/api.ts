@@ -138,7 +138,9 @@ export const sendResetOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
     });
 };
 
-export const resetPassword = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
+export const resetPassword = (
+  verifyOtp: Partial<IUser>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/reset-password`, {
     method: "POST",
     body: JSON.stringify(verifyOtp),

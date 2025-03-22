@@ -1,6 +1,7 @@
+import { verifyOtp } from "@/services/api";
 import React from "react";
 import { useForm } from "react-hook-form";
-
+import { useRouter } from "next/navigation";
 interface OTPFormData {
   otp1: string;
   otp2: string;
@@ -8,11 +9,38 @@ interface OTPFormData {
   otp4: string;
 }
 
-const OtpVerification: React.FC = () => {
-  const { register, handleSubmit } = useForm<OTPFormData>();
+interface IOtpVerification {
+  setLoading: (loading: boolean) => void;
+}
 
-  const onSubmit = (data: OTPFormData) => {
-    console.log("Entered OTP:", Object.values(data).join(""));
+const OtpVerification: React.FC<IOtpVerification> = ({ setLoading }) => {
+  const { register, handleSubmit } = useForm<OTPFormData>();
+  const router = useRouter();
+
+  const onSubmit = async (data: OTPFormData) => {
+    const otp = Object.values(data).join("");
+    const payload = {
+      otp: otp,
+    };
+    setLoading(true);
+
+    const response = await verifyOtp(payload);
+
+    console.log(response.status);
+
+    try {
+      if (response.status === true) {
+        console.log("trueeeee");
+      } else {
+        console.log(response.status);
+        console.log("falseee");
+        router.push("/home");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
