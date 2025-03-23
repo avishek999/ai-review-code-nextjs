@@ -2,6 +2,7 @@ import { verifyOtp } from "@/services/api";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { iResponse } from "@/interface/common";
 interface OTPFormData {
   otp1: string;
   otp2: string;
@@ -11,9 +12,15 @@ interface OTPFormData {
 
 interface IOtpVerification {
   setLoading: (loading: boolean) => void;
+  setToastValue: (value: iResponse) => void;
+  setToastVisible: (loading: boolean) => void;
 }
 
-const OtpVerification: React.FC<IOtpVerification> = ({ setLoading }) => {
+const OtpVerification: React.FC<IOtpVerification> = ({
+  setLoading,
+  setToastValue,
+  setToastVisible,
+}) => {
   const { register, handleSubmit } = useForm<OTPFormData>();
   const router = useRouter();
 
@@ -30,13 +37,11 @@ const OtpVerification: React.FC<IOtpVerification> = ({ setLoading }) => {
 
     try {
       if (response.status === true) {
-        console.log("trueeeee");
         router.push("/home");
-
       } else {
         console.log(response.status);
-        console.log("falseee");
-        router.push("/home");
+        setToastValue(response);
+        setToastVisible(true);
       }
     } catch (error) {
       console.log(error);

@@ -63,6 +63,11 @@ const Signin: React.FC = () => {
     console.log(codeParam);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setToastVisible(false);
+    }, 2000);
+  }, [isToastVisible]);
   /** ================== useEffect end ================== */
 
   /** ================== function start ================== */
@@ -83,11 +88,6 @@ const Signin: React.FC = () => {
               router.push("/home");
             }, 1500);
 
-            setToastValue(response);
-            setTimeout(() => {
-              setToastVisible(false);
-            }, 2000);
-
             setToastVisible(true);
           } else {
             setIsOtpSuccess(true);
@@ -96,10 +96,7 @@ const Signin: React.FC = () => {
         } else {
           setToastVisible(true);
           setToastValue(response);
-          setTimeout(() => {
-            setToastVisible(false);
-          }, 3000);
-          setToastValue(response);
+
           console.log(response.status);
         }
       } catch (error) {
@@ -116,12 +113,13 @@ const Signin: React.FC = () => {
       delete data.password;
 
       try {
-        const response = resetPassword(data);
+        const response = await resetPassword(data);
 
-        if ((await response).status === true) {
+        if (response.status === true) {
           router.push("/home");
         } else {
-          console.log((await response).status);
+          setToastValue(response);
+          setToastVisible(true);
         }
       } catch (error) {
         console.log(error);
@@ -134,12 +132,14 @@ const Signin: React.FC = () => {
     if (authMode === AuthModeEnum.ForgetPassword) {
       delete data.name;
       delete data.password;
-      const response = sendResetOtp(data);
+      const response = await sendResetOtp(data);
 
       try {
-        if ((await response).status === true) {
+        if (response.status === true) {
           setIsForgetPasswordMailSent(true);
         } else {
+          setToastValue(response);
+          setToastVisible(true);
         }
       } catch (error) {
         console.log(error);
@@ -161,6 +161,8 @@ const Signin: React.FC = () => {
       } else {
         console.log(response.status);
         setLoading(false);
+        setToastValue(response);
+        setToastVisible(true);
       }
     } catch (error) {
       console.log(error);
@@ -345,7 +347,11 @@ const Signin: React.FC = () => {
             isOtpSuccess ? "translate-x-[-330px]" : "translate-x-[200px]"
           } `}
         >
-          <OtpVerification setLoading={setLoading} />
+          <OtpVerification
+            setLoading={setLoading}
+            setToastValue={setToastValue}
+            setToastVisible={setToastVisible}
+          />
         </div>
       </div>
       {!isOtpSuccess && (
