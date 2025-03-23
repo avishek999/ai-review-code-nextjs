@@ -2,11 +2,14 @@
 /** core libraries & installed libraries */
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 /** icons */
 import { FaCode, FaGithub } from "react-icons/fa6";
 
 /** user defined component */
+import OtpVerification from "@/components/otpVerification/OtpVerification";
+import { Toast } from "@/components/toast/toast";
 
 /** services */
 import { CLIENT_ID } from "@/services/config";
@@ -20,9 +23,7 @@ import {
 
 /** interfaces */
 import { IUser } from "@/interface/user";
-import OtpVerification from "@/components/otpVerification/OtpVerification";
-import { useRouter } from "next/navigation";
-import { Toast } from "@/components/toast/toast";
+import { iResponse } from "@/interface/common";
 
 enum AuthModeEnum {
   SignIn = "signin",
@@ -35,6 +36,7 @@ const Signin: React.FC = () => {
   const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
   const [isOtpSuccess, setIsOtpSuccess] = useState(false);
   const [isToastVisible, setToastVisible] = useState(false);
+  const [toastValue, setToastValue] = useState<iResponse>();
 
   const [iForgetPasswordMailSent, setIsForgetPasswordMailSent] =
     useState(false);
@@ -77,19 +79,27 @@ const Signin: React.FC = () => {
 
         if (response.status === true) {
           if (response.isAccountVerified === true) {
-
             setTimeout(() => {
               router.push("/home");
-            }, 3000); // This uses the browser's setTimeout
-            
+            }, 1500);
 
+            setToastValue(response);
+            setTimeout(() => {
+              setToastVisible(false);
+            }, 2000);
 
-            
             setToastVisible(true);
           } else {
             setIsOtpSuccess(true);
+            sendVerifyOtp();
           }
         } else {
+          setToastVisible(true);
+          setToastValue(response);
+          setTimeout(() => {
+            setToastVisible(false);
+          }, 3000);
+          setToastValue(response);
           console.log(response.status);
         }
       } catch (error) {
@@ -167,9 +177,7 @@ const Signin: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4">
-      {isToastVisible && <Toast />}
-
-
+      {isToastVisible && toastValue && <Toast toastValue={toastValue} />}
 
       <div className="text-xl md:text-3xl flex flex-col items-center gap-5 font-bold">
         <FaCode size={45} className=" text-[var(--icon-color)]" />

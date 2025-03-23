@@ -31,6 +31,8 @@ const OtpVerification: React.FC<IOtpVerification> = ({ setLoading }) => {
     try {
       if (response.status === true) {
         console.log("trueeeee");
+        router.push("/home");
+
       } else {
         console.log(response.status);
         console.log("falseee");

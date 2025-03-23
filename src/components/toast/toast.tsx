@@ -1,9 +1,14 @@
 "use client";
 
+import { iResponse } from "@/interface/common";
 import { motion } from "framer-motion";
 import { FiCheckCircle } from "react-icons/fi";
+import { BiMessageSquareError } from "react-icons/bi";
+interface iToast {
+  toastValue: iResponse;
+}
 
-export function Toast() {
+export const Toast: React.FC<iToast> = ({ toastValue }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -19,16 +24,24 @@ export function Toast() {
           boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.2)",
         }}
       >
-        <div className="p-1 bg-emerald-500 rounded-full">
-          <FiCheckCircle className="h-6 w-6 text-white" />
+        <div
+          className={`p-1 ${
+            toastValue.status ? " bg-emerald-500" : "bg-red-600"
+          } rounded-full`}
+        >
+          {toastValue.status ? (
+            <FiCheckCircle className="h-6 w-6 text-white" />
+          ) : (
+            <BiMessageSquareError className="h-6 w-6 text-white" />
+          )}
         </div>
         <div>
-          <h3 className="font-medium text-white">Success!</h3>
-          <p className="text-sm text-gray-200">
-            You have logged in successfully
-          </p>
+          <h3 className="font-medium text-white">
+            {`${toastValue.status ? "Success" : "Error"}`}!
+          </h3>
+          <p className="text-sm text-gray-200">{toastValue.message}</p>
         </div>
       </motion.div>
     </motion.div>
   );
-}
+};
