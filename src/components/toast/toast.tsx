@@ -10,7 +10,7 @@ export function Toast() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -10, scale: 0.95 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className="z-50"
+      className="fixed inset-0 flex h-fit top-3  justify-center z-50"
     >
       <motion.div
         whileHover={{ scale: 1.02 }}

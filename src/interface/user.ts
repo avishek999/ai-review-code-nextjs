@@ -1,11 +1,12 @@
 export interface IUser {
   _id: string;
-  email:string;
+  email: string;
   name?: string;
-  password: string;
+  password?: string;
   otp: string;
   verifyOtpExpireAt: number;
   isAccountVerified: boolean;
   resetOtp: string;
+  newPassword?: string;
   resetOtpExpireAt: number;
 }

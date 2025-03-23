@@ -10,11 +10,19 @@ import { FaCode, FaGithub } from "react-icons/fa6";
 
 /** services */
 import { CLIENT_ID } from "@/services/config";
-import { loginViaEmail, registerViaEmail, sendVerifyOtp } from "@/services/api";
+import {
+  loginViaEmail,
+  registerViaEmail,
+  resetPassword,
+  sendResetOtp,
+  sendVerifyOtp,
+} from "@/services/api";
 
 /** interfaces */
 import { IUser } from "@/interface/user";
 import OtpVerification from "@/components/otpVerification/OtpVerification";
+import { useRouter } from "next/navigation";
+import { Toast } from "@/components/toast/toast";
 
 enum AuthModeEnum {
   SignIn = "signin",
@@ -26,6 +34,11 @@ const Signin: React.FC = () => {
   /** ================== useState start ================== */
   const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
   const [isOtpSuccess, setIsOtpSuccess] = useState(false);
+  const [isToastVisible, setToastVisible] = useState(false);
+
+  const [iForgetPasswordMailSent, setIsForgetPasswordMailSent] =
+    useState(false);
+
   const [loading, setLoading] = useState(false);
 
   /** ================== useState end ================== */
@@ -37,7 +50,9 @@ const Signin: React.FC = () => {
     formState: { errors },
   } = useForm<IUser>({});
 
-  /** ==================  hooks start ================== */
+  const router = useRouter();
+
+  /** ==================  hooks end ================== */
   /** ================== useEffect start ================== */
   useEffect(() => {
     const queryString = window.location.search;
@@ -51,6 +66,10 @@ const Signin: React.FC = () => {
   /** ================== function start ================== */
 
   const onAuthSubmit = async (data: IUser) => {
+    setLoading(true);
+
+    /// ? note:  don't use data change it
+
     if (authMode === AuthModeEnum.SignIn) {
       delete data.name;
       try {
@@ -58,7 +77,15 @@ const Signin: React.FC = () => {
 
         if (response.status === true) {
           if (response.isAccountVerified === true) {
-            // redirect
+
+            setTimeout(() => {
+              router.push("/home");
+            }, 3000); // This uses the browser's setTimeout
+            
+
+
+            
+            setToastVisible(true);
           } else {
             setIsOtpSuccess(true);
           }
@@ -73,13 +100,47 @@ const Signin: React.FC = () => {
 
       return;
     }
+
+    if (iForgetPasswordMailSent === true) {
+      delete data.name;
+      delete data.password;
+
+      try {
+        const response = resetPassword(data);
+
+        if ((await response).status === true) {
+          router.push("/home");
+        } else {
+          console.log((await response).status);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+      console.log(data);
+      return;
+    }
     if (authMode === AuthModeEnum.ForgetPassword) {
       delete data.name;
+      delete data.password;
+      const response = sendResetOtp(data);
+
+      try {
+        if ((await response).status === true) {
+          setIsForgetPasswordMailSent(true);
+        } else {
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+
       console.log(data);
       return;
     }
 
-    setLoading(true);
     const response = await registerViaEmail(data);
 
     try {
@@ -106,6 +167,10 @@ const Signin: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4">
+      {isToastVisible && <Toast />}
+
+
+
       <div className="text-xl md:text-3xl flex flex-col items-center gap-5 font-bold">
         <FaCode size={45} className=" text-[var(--icon-color)]" />
         <div className="text-center">
@@ -149,93 +214,118 @@ const Signin: React.FC = () => {
           <div>
             <form
               onSubmit={handleSubmit(onAuthSubmit)}
-              className="max-w-md mx-auto  rounded-lg shadow-md space-y-6 mt-5"
+              className="max-w-md mx-auto rounded-lg shadow-md space-y-6 mt-5"
             >
               {authMode === AuthModeEnum.SignUp && (
-                <div>
+                <div className="relative">
                   <label className="block text-sm font-medium text-[var(--primary-text-color)]">
                     Full Name
                   </label>
                   <input
                     type="text"
                     {...register("name", {
-                      required: {
-                        value: true,
-                        message: "Email is required",
-                      },
+                      required: { value: true, message: "Name is required" },
                     })}
                     placeholder="Enter your name"
-                    className="mt-1 w-full px-4 py-2 placeholder:text-sm  bg-[var(--third-background-color)] outline-none  rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                    className="mt-1 w-full px-4 py-2 placeholder:text-sm bg-[var(--third-background-color)] outline-none rounded-md focus:ring focus:ring-[var(--primary-color)]"
                   />
-                  <div>{errors.name?.message}</div>
+                  <div className="absolute bottom-[-24px] right-0 text-[12px] text-[var(--error-text-color)]">
+                    {errors.name?.message}
+                  </div>
                 </div>
               )}
-              <div>
+
+              <div className="relative">
                 <label className="block text-sm font-medium text-[var(--primary-text-color)]">
                   Email Address
                 </label>
                 <input
                   type="email"
                   {...register("email", {
-                    required: {
-                      value: true,
-                      message: "Email is required",
-                    },
+                    required: { value: true, message: "Email is required" },
                   })}
                   placeholder="Enter your email"
-                  className="mt-1 w-full px-4 py-2  bg-[var(--third-background-color)] outline-none placeholder:text-sm  rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                  className="mt-1 w-full px-4 py-2 bg-[var(--third-background-color)] outline-none placeholder:text-sm rounded-md focus:ring focus:ring-[var(--primary-color)]"
                 />
-                <div>{errors.email?.message}</div>
+                <div className="absolute bottom-[-24px] right-0 text-[12px] text-[var(--error-text-color)]">
+                  {errors.email?.message}
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-[var(--primary-text-color)]">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  {...register("password", {
-                    required: {
-                      value: true,
-                      message: "password is required",
-                    },
-                  })}
-                  placeholder="Enter your password"
-                  className="mt-1 w-full px-4 py-2 placeholder:text-sm   bg-[var(--third-background-color)] outline-none  rounded-md focus:ring focus:ring-[var(--primary-color)]"
-                />
-                <div>{errors.password?.message}</div>
-              </div>
-
-              {authMode === AuthModeEnum.ForgetPassword && (
-                <div>
+              {authMode !== AuthModeEnum.ForgetPassword && (
+                <div className="relative">
                   <label className="block text-sm font-medium text-[var(--primary-text-color)]">
-                    OTP
+                    Password
                   </label>
                   <input
-                    type="number"
-                    {...register("otp", {
+                    type="password"
+                    {...register("password", {
                       required: {
-                        value: false,
-                        message: "otp is required",
+                        value: true,
+                        message: "Password is required",
                       },
                     })}
-                    placeholder="Enter your OTP"
-                    className="mt-1 w-full px-4 py-2 placeholder:text-sm   bg-[var(--third-background-color)] outline-none  rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                    placeholder="Enter your password"
+                    className="mt-1 w-full px-4 py-2 placeholder:text-sm bg-[var(--third-background-color)] outline-none rounded-md focus:ring focus:ring-[var(--primary-color)]"
                   />
-                  <div>{errors.otp?.message}</div>
+                  <div className="absolute bottom-[-23px] right-0 text-[12px] text-[var(--error-text-color)]">
+                    {errors.password?.message}
+                  </div>
                 </div>
               )}
+
+              {authMode === AuthModeEnum.ForgetPassword &&
+                iForgetPasswordMailSent && (
+                  <>
+                    <div className="relative">
+                      <label className="block text-sm font-medium text-[var(--primary-text-color)]">
+                        OTP
+                      </label>
+                      <input
+                        type="number"
+                        {...register("otp", {
+                          required: { value: true, message: "OTP is required" },
+                        })}
+                        placeholder="Enter your OTP"
+                        className="mt-1 w-full px-4 py-2 placeholder:text-sm bg-[var(--third-background-color)] outline-none rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                      />
+                      <div className="absolute bottom-[-24px] right-0 text-[12px] text-[var(--error-text-color)]">
+                        {errors.otp?.message}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <label className="block text-sm font-medium text-[var(--primary-text-color)]">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        {...register("newPassword", {
+                          required: {
+                            value: true,
+                            message: "Password is required",
+                          },
+                        })}
+                        placeholder="Enter new password"
+                        className="mt-1 w-full px-4 py-2 placeholder:text-sm bg-[var(--third-background-color)] outline-none rounded-md focus:ring focus:ring-[var(--primary-color)]"
+                      />
+                      <div className="absolute bottom-[-24px] right-0 text-[12px] text-[var(--error-text-color)]">
+                        {errors.password?.message}
+                      </div>
+                    </div>
+                  </>
+                )}
 
               <div
                 onClick={() => setAuthMode(AuthModeEnum.ForgetPassword)}
                 className="text-[var(--primary-color)] text-[12px] text-end cursor-pointer"
               >
-                Forget password
+                Forget password?
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[var(--primary-color)] text-white py-2 rounded-md hover:opacity-80  active:scale-95  transition"
+                className="w-full bg-[var(--primary-color)] text-white py-2 rounded-md hover:opacity-80 active:scale-95 transition"
               >
                 Submit
               </button>

@@ -116,10 +116,10 @@ export const verifyOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
     });
 };
 
-export const sendResetOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
+export const sendResetOtp = (email: Partial<IUser>): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/send-reset-otp`, {
     method: "POST",
-    body: JSON.stringify(verifyOtp),
+    body: JSON.stringify(email),
     headers: {
       "content-Type": "application/json",
     },
