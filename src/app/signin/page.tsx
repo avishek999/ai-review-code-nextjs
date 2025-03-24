@@ -184,6 +184,9 @@ const Signin: React.FC = () => {
         "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
       );
     }
+    if (codeParam === null) {
+      return;
+    }
 
     try {
       const response = await accessGithub({ code: codeParam });
@@ -192,10 +195,13 @@ const Signin: React.FC = () => {
         console.log("trueee");
         router.push("/home");
       } else {
+        router.push("false");
+
         setToastValue(response);
         setToastVisible(true);
       }
     } catch (error) {
+      router.push("errorerror");
       console.log(error);
     } finally {
       setLoading(false);

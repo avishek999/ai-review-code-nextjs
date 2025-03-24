@@ -1,13 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ChatScreen from "@/components/chatScreen/ChatScreen";
 import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
+import { ICodeReview } from "@/interface/code";
 
 const Home: React.FC = () => {
+  const [payload, setPayload] = useState<ICodeReview>({
+    UserInputCode: "",
+    chat: [{ message: "" }],
+  });
+
   const monaco = useMonaco();
+
+  console.log(payload);
 
   useEffect(() => {
     if (monaco) {
@@ -15,6 +23,7 @@ const Home: React.FC = () => {
         base: "vs-dark",
         inherit: true,
         rules: [],
+
         colors: {
           "editor.background": "#111825",
         },
@@ -48,6 +57,9 @@ const Home: React.FC = () => {
               defaultLanguage="javascript"
               defaultValue={code}
               theme="CustomTheme"
+              onChange={(value) =>
+                setPayload({ ...payload, UserInputCode: value || "" })
+              }
               options={{
                 minimap: { enabled: false },
                 readOnly: false,
@@ -57,7 +69,7 @@ const Home: React.FC = () => {
         </div>
 
         <div className="w-[25%]   ">
-          <ChatScreen />
+          <ChatScreen setPayload={setPayload} />
         </div>
       </div>
     </>

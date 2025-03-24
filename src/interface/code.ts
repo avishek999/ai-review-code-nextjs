@@ -12,14 +12,14 @@ interface IFeedback {
 
 interface IChatMessage {
   message: string;
-  timestamp: Date;
+  timestamp?: Date;
 }
 
 export interface ICodeReview {
-  userId: string;
-  filename: string;
-  UserInputCode: string;
-  feedback: IFeedback;
+  userId?: string;
+  filename?: string;
+  UserInputCode?: string;
+  feedback?: IFeedback;
   improvedCode?: string;
-  chat: IChatMessage[];
+  chat?: IChatMessage[];
 }

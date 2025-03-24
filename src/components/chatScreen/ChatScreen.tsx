@@ -1,9 +1,14 @@
+import { ICodeReview } from "@/interface/code";
 import React from "react";
 import { FaLightbulb, FaPaperPlane } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
 
-const ChatScreen: React.FC = () => {
+interface IChat {
+  setPayload: (payload: ICodeReview) => void;
+}
+
+const ChatScreen: React.FC<IChat> = ({ setPayload }) => {
   return (
     <div className="p-4 relative h-full w-full overflow-auto">
       {/* ===================== review overview  ===================== */}
@@ -99,6 +104,7 @@ const ChatScreen: React.FC = () => {
             type="text"
             placeholder="Ask Ai about the code "
             className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
+            onChange={(e) => setPayload({ chat: e.target.value })}
           />
 
           <FaPaperPlane className="text-[var(--secondary-color)] cursor-pointer" />
