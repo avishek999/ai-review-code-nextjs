@@ -196,6 +196,7 @@ export const sendCodeForReview = (payload: Partial<ICodeReview>) => {
     headers: {
       "content-Type": "application/json",
     },
+    credentials: "include",
   })
     .then(async (response) => {
       const res = await response.json();

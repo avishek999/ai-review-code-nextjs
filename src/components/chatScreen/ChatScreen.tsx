@@ -1,14 +1,22 @@
-import { ICodeReview } from "@/interface/code";
-import React from "react";
+import React, { useState } from "react";
 import { FaLightbulb, FaPaperPlane } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
 
-interface IChat {
-  setPayload: (payload: ICodeReview) => void;
-}
 
-const ChatScreen: React.FC<IChat> = ({ setPayload }) => {
+
+
+interface IchatMessage {
+  setMessage: (message: string) => void;
+}
+const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handelData = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(inputValue);
+    setMessage(inputValue)
+  };
   return (
     <div className="p-4 relative h-full w-full overflow-auto">
       {/* ===================== review overview  ===================== */}
@@ -66,19 +74,19 @@ const ChatScreen: React.FC<IChat> = ({ setPayload }) => {
             Error: Unhandled Promise Rejection
           </div>
           <div className="text-sm ">
-            the catch block should properly handoling or rethroe the error
-            instead of just loging ib{" "}
+            the catch block should properly handle or rethrow the error instead
+            of just logging it.
           </div>
         </div>
 
         <div className="flex flex-col gap-3 ">
           <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
             <div className="text-[var(--warning-text-color)] ">
-              warning: Unhandled Promise Rejection
+              Warning: Unhandled Promise Rejection
             </div>
             <div className="text-sm mt-2">
-              the catch block should properly handoling or rethroe the error
-              instead of just loging ib{" "}
+              The catch block should properly handle or rethrow the error
+              instead of just logging it.
             </div>
           </div>
         </div>
@@ -86,28 +94,37 @@ const ChatScreen: React.FC<IChat> = ({ setPayload }) => {
         <div className="flex flex-col gap-3 ">
           <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
             <div className="text-[var(--improvement-text-color)] ">
-              improvement: Unhandled Promise Rejection
+              Improvement: Unhandled Promise Rejection
             </div>
             <div className="text-sm mt-2">
-              the catch block should properly handoling or rethroe the error
-              instead of just loging ib{" "}
+              The catch block should properly handle or rethrow the error
+              instead of just logging it.
             </div>
           </div>
         </div>
       </div>
 
-      {/* ===================== send  input  ===================== */}
+      {/* ===================== send input ===================== */}
 
       <div className="absolute bottom-0 w-[90%] pt-4 border-t border-[var(--secondary-text-color)] ">
-        <div className=" py-3 flex  justify-center items-center bg-[var(--secondary-background-color)]">
-          <input
-            type="text"
-            placeholder="Ask Ai about the code "
-            className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
-            onChange={(e) => setPayload({ chat: e.target.value })}
-          />
+        <div className="py-3 flex flex-col items-center bg-[var(--secondary-background-color)]">
+          <div className="flex w-full justify-center items-center">
+            <form onSubmit={handelData}>
+              <input
+                type="text"
+                placeholder="Ask AI about the code"
+                className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <button type="submit">
+                <FaPaperPlane className="text-[var(--secondary-color)] cursor-pointer" />
+              </button>
+            </form>
+          </div>
 
-          <FaPaperPlane className="text-[var(--secondary-color)] cursor-pointer" />
+          {/* Display input value */}
+          <div className="mt-2 text-sm text-[var(--primary-text-color)]"></div>
         </div>
       </div>
     </div>

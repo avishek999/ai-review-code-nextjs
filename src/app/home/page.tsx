@@ -5,17 +5,13 @@ import ChatScreen from "@/components/chatScreen/ChatScreen";
 import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
-import { ICodeReview } from "@/interface/code";
+import { sendCodeForReview } from "@/services/api";
 
 const Home: React.FC = () => {
-  const [payload, setPayload] = useState<ICodeReview>({
-    UserInputCode: "",
-    chat: [{ message: "" }],
-  });
+  const [Fullcode, setCode] = useState("");
+  const [message, setMessage] = useState("");
 
   const monaco = useMonaco();
-
-  console.log(payload);
 
   useEffect(() => {
     if (monaco) {
@@ -42,6 +38,15 @@ const Home: React.FC = () => {
 }
   `;
 
+  const handlePrintCode = () => {
+    const payload = {
+      UserInputCode: Fullcode,
+      message: message,
+    };
+    console.log(payload);
+    sendCodeForReview(payload);
+  };
+
   return (
     <>
       <HomeNavBar />
@@ -57,19 +62,24 @@ const Home: React.FC = () => {
               defaultLanguage="javascript"
               defaultValue={code}
               theme="CustomTheme"
-              onChange={(value) =>
-                setPayload({ ...payload, UserInputCode: value || "" })
-              }
+              onChange={(value) => setCode(value || "")}
               options={{
                 minimap: { enabled: false },
                 readOnly: false,
               }}
             />
           </div>
+
+          <button
+            onClick={handlePrintCode}
+            className="mt-2 p-2 bg-blue-500 text-white rounded"
+          >
+            Print Code
+          </button>
         </div>
 
         <div className="w-[25%]   ">
-          <ChatScreen setPayload={setPayload} />
+          <ChatScreen setMessage={setMessage} />
         </div>
       </div>
     </>
