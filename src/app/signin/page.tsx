@@ -14,6 +14,7 @@ import { Toast } from "@/components/toast/toast";
 /** services */
 import { CLIENT_ID } from "@/services/config";
 import {
+  accessGithub,
   loginViaEmail,
   registerViaEmail,
   resetPassword,
@@ -68,6 +69,7 @@ const Signin: React.FC = () => {
       setToastVisible(false);
     }, 2000);
   }, [isToastVisible]);
+
   /** ================== useEffect end ================== */
 
   /** ================== function start ================== */
@@ -169,10 +171,35 @@ const Signin: React.FC = () => {
     }
   };
 
-  const getGithubCode = () => {
-    window.location.assign(
-      "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
-    );
+  const getGithubCode = async () => {
+    setLoading(true);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const codeParam = urlParams.get("code");
+
+    if (!codeParam) {
+      // Redirect to GitHub if there's no code in URL
+      window.location.assign(
+        "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
+      );
+    }
+
+    try {
+      const response = await accessGithub({ code: codeParam });
+
+      if (response.status === true) {
+        console.log("trueee");
+        router.push("/home");
+      } else {
+        setToastValue(response);
+        setToastVisible(true);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   /** ================== function end ================== */

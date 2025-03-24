@@ -164,10 +164,10 @@ export const resetPassword = (
 
 //  ! this will be post method for sending the code
 
-export const accessGithub = (): Promise<iResponse> => {
+export const accessGithub = (code:string): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/get-access-token`, {
-    method: "GET",
-    body: JSON.stringify(verifyOtp),
+    method: "POST",
+    body: JSON.stringify(code),
     headers: {
       "content-Type": "application/json",
     },
