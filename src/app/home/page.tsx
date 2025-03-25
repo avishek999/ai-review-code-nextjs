@@ -49,10 +49,10 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <HomeNavBar />
+      <HomeNavBar handlePrintCode={handlePrintCode}/>
       <div className="flex h-[calc(100vh-76.8px)]">
         <div className="w-[20%]    ">
-          <SideBar />
+          <SideBar  />
         </div>
 
         <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
@@ -70,12 +70,12 @@ const Home: React.FC = () => {
             />
           </div>
 
-          <button
+          {/* <button
             onClick={handlePrintCode}
             className="mt-2 p-2 bg-blue-500 text-white rounded"
           >
             Print Code
-          </button>
+          </button> */}
         </div>
 
         <div className="w-[25%]   ">

@@ -6,7 +6,11 @@ import { motion } from "framer-motion";
 import { FaPlay } from "react-icons/fa";
 import { IoSparklesSharp } from "react-icons/io5";
 
-export default function AnimatedReviewButton() {
+interface IHomeNav {
+  handlePrintCode: () => void;
+}
+
+const AnimatedReviewButton: React.FC<IHomeNav> = ({ handlePrintCode }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -76,7 +80,10 @@ export default function AnimatedReviewButton() {
       )}
 
       {/* Button content */}
-      <div className="flex items-center justify-center gap-2">
+      <div
+        className="flex items-center justify-center gap-2"
+        onClick={handlePrintCode}
+      >
         <motion.div
           animate={isClicked ? { rotate: [0, 360] } : {}}
           transition={{ duration: 0.5 }}
@@ -127,4 +134,6 @@ export default function AnimatedReviewButton() {
       )}
     </motion.button>
   );
-}
+};
+
+export default AnimatedReviewButton;
