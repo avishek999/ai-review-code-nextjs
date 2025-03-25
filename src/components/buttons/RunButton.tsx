@@ -16,6 +16,7 @@ const AnimatedReviewButton: React.FC<IHomeNav> = ({ handlePrintCode }) => {
 
   const handleClick = () => {
     setIsClicked(true);
+    handlePrintCode();
     setTimeout(() => setIsClicked(false), 2000);
   };
 
@@ -80,10 +81,7 @@ const AnimatedReviewButton: React.FC<IHomeNav> = ({ handlePrintCode }) => {
       )}
 
       {/* Button content */}
-      <div
-        className="flex items-center justify-center gap-2"
-        onClick={handlePrintCode}
-      >
+      <div className="flex items-center justify-center gap-2">
         <motion.div
           animate={isClicked ? { rotate: [0, 360] } : {}}
           transition={{ duration: 0.5 }}

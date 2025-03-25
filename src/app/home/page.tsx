@@ -6,10 +6,12 @@ import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
 import { sendCodeForReview } from "@/services/api";
+import { ICodeReview } from "@/interface/code";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
   const [message, setMessage] = useState("");
+  const [getCodeAfterReview, setCodeAfterReview] = useState<ICodeReview>();
 
   const monaco = useMonaco();
 
@@ -27,6 +29,8 @@ const Home: React.FC = () => {
       monaco.editor.setTheme("customTheme");
     }
   }, [monaco]);
+
+  console.log("getCodeAfterReview", getCodeAfterReview);
   /** ================== useEffect end ================== */
 
   const code = `function calculateTotal(items) {
@@ -38,21 +42,28 @@ const Home: React.FC = () => {
 }
   `;
 
-  const handlePrintCode = () => {
+  const handlePrintCode = async () => {
     const payload = {
       UserInputCode: Fullcode,
       message: message,
     };
     console.log(payload);
-    sendCodeForReview(payload);
+
+    try {
+      const response = await sendCodeForReview(payload);
+
+      setCodeAfterReview(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
-      <HomeNavBar handlePrintCode={handlePrintCode}/>
+      <HomeNavBar handlePrintCode={handlePrintCode} />
       <div className="flex h-[calc(100vh-76.8px)]">
         <div className="w-[20%]    ">
-          <SideBar  />
+          <SideBar />
         </div>
 
         <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
@@ -70,16 +81,19 @@ const Home: React.FC = () => {
             />
           </div>
 
-          {/* <button
+          <button
             onClick={handlePrintCode}
             className="mt-2 p-2 bg-blue-500 text-white rounded"
           >
             Print Code
-          </button> */}
+          </button>
         </div>
 
         <div className="w-[25%]   ">
-          <ChatScreen setMessage={setMessage} />
+          <ChatScreen
+            setMessage={setMessage}
+            getCodeAfterReview={getCodeAfterReview}
+          />
         </div>
       </div>
     </>

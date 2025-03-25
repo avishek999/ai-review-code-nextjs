@@ -1,22 +1,30 @@
-import React, { useState } from "react";
-import { FaLightbulb, FaPaperPlane } from "react-icons/fa6";
+"usee client";
+
+import { ICodeReview } from "@/interface/code";
+import React, { useEffect } from "react";
+import { FaLightbulb } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
 
-
-
-
 interface IchatMessage {
   setMessage: (message: string) => void;
+  getCodeAfterReview: ICodeReview;
 }
-const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
-  const [inputValue, setInputValue] = useState("");
+const ChatScreen: React.FC<IchatMessage> = ({
+  setMessage,
+  getCodeAfterReview,
+}) => {
+  
+  useEffect(() => {
+    const errorCount = getCodeAfterReview?.feedback?.errors?.length || 0;
+    const warningCount = getCodeAfterReview?.feedback?.errors?.length || 0;
+    const impormentCount = getCodeAfterReview?.feedback?.errors?.length || 0;
 
-  const handelData = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log(inputValue);
-    setMessage(inputValue)
-  };
+    console.log(errorCount, impormentCount, warningCount);
+
+    console.log("data", getCodeAfterReview);
+  }, [getCodeAfterReview]);
+
   return (
     <div className="p-4 relative h-full w-full overflow-auto">
       {/* ===================== review overview  ===================== */}
@@ -34,7 +42,7 @@ const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
               </div>
             </div>
             <div className="text-[var(--error-text-color)] bg-[var(--error-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              2
+              {getCodeAfterReview?.filename}
             </div>
           </div>
           <div className="flex justify-between">
@@ -47,7 +55,7 @@ const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
               </div>
             </div>
             <div className="text-[var(--warning-text-color)] bg-[var(--warning-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              2
+              0
             </div>
           </div>
           <div className="flex justify-between">
@@ -60,7 +68,7 @@ const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
               </div>
             </div>
             <div className="text-[var(--improvement-text-color)] bg-[var(--improvement-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              2
+              0
             </div>
           </div>
         </div>
@@ -109,18 +117,12 @@ const ChatScreen: React.FC<IchatMessage> = ({setMessage}) => {
       <div className="absolute bottom-0 w-[90%] pt-4 border-t border-[var(--secondary-text-color)] ">
         <div className="py-3 flex flex-col items-center bg-[var(--secondary-background-color)]">
           <div className="flex w-full justify-center items-center">
-            <form onSubmit={handelData}>
-              <input
-                type="text"
-                placeholder="Ask AI about the code"
-                className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              <button type="submit">
-                <FaPaperPlane className="text-[var(--secondary-color)] cursor-pointer" />
-              </button>
-            </form>
+            <input
+              type="text"
+              placeholder="Ask AI about the code"
+              className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
+              onChange={(e) => setMessage(e.target.value)}
+            />
           </div>
 
           {/* Display input value */}
