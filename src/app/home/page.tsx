@@ -11,7 +11,18 @@ import { ICodeReview } from "@/interface/code";
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
   const [message, setMessage] = useState("");
-  const [getCodeAfterReview, setCodeAfterReview] = useState<ICodeReview>();
+  const [getCodeAfterReview, setCodeAfterReview] = useState<ICodeReview>({
+    userId: "",
+    filename: "",
+    UserInputCode: "",
+    feedback: {
+      errors: [],
+      warnings: [],
+      improvements: [],
+    },
+    improvedCode: "",
+    chat: [],
+  });
 
   const monaco = useMonaco();
 
@@ -52,7 +63,9 @@ const Home: React.FC = () => {
     try {
       const response = await sendCodeForReview(payload);
 
-      setCodeAfterReview(response);
+      if (response === undefined) return;
+
+      setCodeAfterReview(response.data as ICodeReview);
     } catch (error) {
       console.log(error);
     }
@@ -80,13 +93,6 @@ const Home: React.FC = () => {
               }}
             />
           </div>
-
-          <button
-            onClick={handlePrintCode}
-            className="mt-2 p-2 bg-blue-500 text-white rounded"
-          >
-            Print Code
-          </button>
         </div>
 
         <div className="w-[25%]   ">

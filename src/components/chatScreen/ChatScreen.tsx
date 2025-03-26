@@ -1,7 +1,7 @@
 "usee client";
 
 import { ICodeReview } from "@/interface/code";
-import React, { useEffect } from "react";
+import React from "react";
 import { FaLightbulb } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
@@ -14,17 +14,6 @@ const ChatScreen: React.FC<IchatMessage> = ({
   setMessage,
   getCodeAfterReview,
 }) => {
-  
-  useEffect(() => {
-    const errorCount = getCodeAfterReview?.feedback?.errors?.length || 0;
-    const warningCount = getCodeAfterReview?.feedback?.errors?.length || 0;
-    const impormentCount = getCodeAfterReview?.feedback?.errors?.length || 0;
-
-    console.log(errorCount, impormentCount, warningCount);
-
-    console.log("data", getCodeAfterReview);
-  }, [getCodeAfterReview]);
-
   return (
     <div className="p-4 relative h-full w-full overflow-auto">
       {/* ===================== review overview  ===================== */}
@@ -42,7 +31,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--error-text-color)] bg-[var(--error-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              {getCodeAfterReview?.filename}
+              {getCodeAfterReview.feedback?.errors.length}
             </div>
           </div>
           <div className="flex justify-between">
@@ -55,10 +44,10 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--warning-text-color)] bg-[var(--warning-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              0
+              {getCodeAfterReview.feedback?.warnings.length}
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between ">
             <div className="flex items-center gap-2">
               <div className="text-[var(--improvement-text-color)] ">
                 <FaLightbulb />
@@ -68,7 +57,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--improvement-text-color)] bg-[var(--improvement-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              0
+              {getCodeAfterReview.feedback?.improvements.length}
             </div>
           </div>
         </div>
@@ -76,45 +65,44 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== review card  ===================== */}
 
-      <div className="flex flex-col gap-3 mt-5">
-        <div className=" bg-[var(--error-background-color)] px-4 py-5 ">
-          <div className="text-[var(--error-text-color)] ">
-            Error: Unhandled Promise Rejection
+      <div className="flex flex-col gap-3 mt-5 overflow-auto h-[400px]:">
+        {getCodeAfterReview.feedback?.errors.map((error, index) => (
+          <div
+            className=" bg-[var(--error-background-color)] px-4 py-5 "
+            key={index}
+          >
+            <div className="text-[var(--error-text-color)] ">
+              Error: {error.title}
+            </div>
+            <div className="text-sm ">{error.message}</div>
           </div>
-          <div className="text-sm ">
-            the catch block should properly handle or rethrow the error instead
-            of just logging it.
+        ))}
+        {getCodeAfterReview.feedback?.warnings.map((warning, index) => (
+          <div className="flex flex-col gap-3 " key={index}>
+            <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
+              <div className="text-[var(--warning-text-color)] ">
+                Warning: {warning.title}
+              </div>
+              <div className="text-sm mt-2">{warning.message}</div>
+            </div>
           </div>
-        </div>
+        ))}
 
-        <div className="flex flex-col gap-3 ">
-          <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
-            <div className="text-[var(--warning-text-color)] ">
-              Warning: Unhandled Promise Rejection
-            </div>
-            <div className="text-sm mt-2">
-              The catch block should properly handle or rethrow the error
-              instead of just logging it.
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3 ">
-          <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
-            <div className="text-[var(--improvement-text-color)] ">
-              Improvement: Unhandled Promise Rejection
-            </div>
-            <div className="text-sm mt-2">
-              The catch block should properly handle or rethrow the error
-              instead of just logging it.
+        {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
+          <div className="flex flex-col gap-3 " key={index}>
+            <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
+              <div className="text-[var(--improvement-text-color)] ">
+                Improvement: {improvement.title}
+              </div>
+              <div className="text-sm mt-2">{improvement.message}</div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* ===================== send input ===================== */}
 
-      <div className="absolute bottom-0 w-[90%] pt-4 border-t border-[var(--secondary-text-color)] ">
+      <div className="fixed bottom-0 w-[90%] pt-4 border-t border-[var(--secondary-text-color)] bg-[#111825]">
         <div className="py-3 flex flex-col items-center bg-[var(--secondary-background-color)]">
           <div className="flex w-full justify-center items-center">
             <input

@@ -7,7 +7,7 @@ interface IErrorDetail {
 interface IFeedback {
   errors: IErrorDetail[];
   warnings: IErrorDetail[];
-  improvement: IErrorDetail[];
+  improvements: IErrorDetail[];
 }
 
 interface IChatMessage {

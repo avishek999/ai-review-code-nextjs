@@ -37,6 +37,7 @@ const Signin: React.FC = () => {
   const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
   const [isOtpSuccess, setIsOtpSuccess] = useState(false);
   const [isToastVisible, setToastVisible] = useState(false);
+  
   const [toastValue, setToastValue] = useState<iResponse>();
 
   const [iForgetPasswordMailSent, setIsForgetPasswordMailSent] =

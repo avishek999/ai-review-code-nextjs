@@ -189,7 +189,9 @@ export const accessGithub = (code: { code: string }): Promise<iResponse> => {
 
 /**----------------------- CodeReview api end ----------------------------- */
 
-export const sendCodeForReview = (payload: Partial<ICodeReview>) => {
+export const sendCodeForReview = (
+  payload: Partial<ICodeReview>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/codeReview/send-code-for-review`, {
     method: "POST",
     body: JSON.stringify(payload),
