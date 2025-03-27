@@ -20,11 +20,21 @@ const Home: React.FC = () => {
       warnings: [],
       improvements: [],
     },
-    improvedCode: "",
+    improvedCode: `function calculateTotal(items) {
+      int total = 1;
+      for(int items of items){
+      total += items.price;
+      }
+      return total;
+    }
+      `,
     chat: [],
   });
 
   const monaco = useMonaco();
+
+
+  
 
   useEffect(() => {
     if (monaco) {
@@ -43,15 +53,6 @@ const Home: React.FC = () => {
 
   console.log("getCodeAfterReview", getCodeAfterReview);
   /** ================== useEffect end ================== */
-
-  const code = `function calculateTotal(items) {
-  int total = 0;
-  for(int items of items){
-  total += items.price;
-  }
-  return total;
-}
-  `;
 
   const handlePrintCode = async () => {
     const payload = {
@@ -84,7 +85,8 @@ const Home: React.FC = () => {
             <Editor
               height="100%"
               defaultLanguage="javascript"
-              defaultValue={code}
+              defaultValue={getCodeAfterReview.improvedCode}
+              value={getCodeAfterReview.improvedCode}
               theme="CustomTheme"
               onChange={(value) => setCode(value || "")}
               options={{
