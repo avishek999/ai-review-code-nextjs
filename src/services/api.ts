@@ -213,4 +213,49 @@ export const sendCodeForReview = (
     });
 };
 
+export const getAllCodesReviewBUserId = (): Promise<iResponse> => {
+  return fetch(`${SERVER_URL}/api/codeReview/getAll-reviewCode-by-UserId`, {
+    method: "GET",
+
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const getAllCodeReviewById = (_id: {
+  _id: string;
+}): Promise<iResponse> => {
+  return fetch(`${SERVER_URL}/api/codeReview/get-reviewCode-byId`, {
+    method: "POST",
+    body: JSON.stringify(_id),
+    headers: {
+      "content-Type": "application/json",
+    },
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
 /**----------------------- CodeReview api end ----------------------------- */

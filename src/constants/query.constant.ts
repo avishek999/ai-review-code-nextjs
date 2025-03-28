@@ -1,0 +1,1 @@
+export const QUERY_REVIEWED_CODE_KEY = "ReviewedCode";

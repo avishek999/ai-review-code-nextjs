@@ -15,6 +15,7 @@ import { Toast } from "@/components/toast/toast";
 import { CLIENT_ID } from "@/services/config";
 import {
   accessGithub,
+  
   loginViaEmail,
   registerViaEmail,
   resetPassword,
@@ -37,7 +38,7 @@ const Signin: React.FC = () => {
   const [authMode, setAuthMode] = useState<AuthModeEnum>(AuthModeEnum.SignUp);
   const [isOtpSuccess, setIsOtpSuccess] = useState(false);
   const [isToastVisible, setToastVisible] = useState(false);
-  
+
   const [toastValue, setToastValue] = useState<iResponse>();
 
   const [iForgetPasswordMailSent, setIsForgetPasswordMailSent] =
@@ -70,6 +71,7 @@ const Signin: React.FC = () => {
       setToastVisible(false);
     }, 2000);
   }, [isToastVisible]);
+
 
   /** ================== useEffect end ================== */
 

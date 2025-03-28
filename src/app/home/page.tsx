@@ -5,7 +5,11 @@ import ChatScreen from "@/components/chatScreen/ChatScreen";
 import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
-import { sendCodeForReview } from "@/services/api";
+import {
+  getAllCodeReviewById,
+  getAllCodesReviewBUserId,
+  sendCodeForReview,
+} from "@/services/api";
 import { ICodeReview } from "@/interface/code";
 
 const Home: React.FC = () => {
@@ -33,8 +37,10 @@ const Home: React.FC = () => {
 
   const monaco = useMonaco();
 
-
-  
+  useEffect(() => {
+    getAllCodesReviewBUserId();
+    getAllCodeReviewById({ _id: "67e58698c0bc5884ce0628d5" });
+  }, []);
 
   useEffect(() => {
     if (monaco) {

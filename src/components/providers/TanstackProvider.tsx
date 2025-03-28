@@ -7,6 +7,16 @@ interface ITanstackProvider {
   children: React.ReactNode;
 }
 
+export const ProviderQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+    },
+  },
+});
+
+
 const TanstackProvider: React.FC<ITanstackProvider> = ({ children }) => {
   const [queryClient] = useState(() => new QueryClient());
   return (
