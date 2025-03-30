@@ -1,7 +1,12 @@
 import { ProviderQueryClient } from "@/components/providers/TanstackProvider";
 import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
+
 import { iResponse } from "@/interface/common";
-import { getAllCodeReviewById, getAllCodesReviewBUserId, sendCodeForReview } from "@/services/api";
+import {
+  getAllCodeReviewById,
+  getAllCodesReviewBUserId,
+  sendCodeForReview,
+} from "@/services/api";
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 
 export const useDoctorPrescriptionQuery = () => {
@@ -14,7 +19,7 @@ export const useDoctorPrescriptionQuery = () => {
     },
   });
 
-  const usePrefetchById = (
+  const usePrefetchAllById = (
     _id: string
   ): UseQueryResult<iResponse, Error> => {
     return useQuery({
@@ -23,23 +28,21 @@ export const useDoctorPrescriptionQuery = () => {
     });
   };
 
-  const usePrefetchByUserId = (
-    
-  ): UseQueryResult<iResponse, Error> => {
+  const usePrefetchByUserId = () => {
     return useQuery({
       queryKey: [QUERY_REVIEWED_CODE_KEY],
-      queryFn: async () => await getAllCodesReviewBUserId(),
+      queryFn: getAllCodesReviewBUserId,
     });
   };
 
-//   const updateMutation = useMutation({
-//     mutationFn: updatePrescriptionById,
-//     onSuccess: async () => {
-//       await ProviderQueryClient.invalidateQueries({
-//         queryKey: [QUERY_REVIEWED_CODE_KEY],
-//       });
-//     },
-//   });
+  //   const updateMutation = useMutation({
+  //     mutationFn: updatePrescriptionById,
+  //     onSuccess: async () => {
+  //       await ProviderQueryClient.invalidateQueries({
+  //         queryKey: [QUERY_REVIEWED_CODE_KEY],
+  //       });
+  //     },
+  //   });
 
   // -------------------------------------------  Prescription Config start -------------------------------------------
 
@@ -47,7 +50,7 @@ export const useDoctorPrescriptionQuery = () => {
 
   return {
     createMutation,
-    usePrefetchById,
+    usePrefetchAllById,
     usePrefetchByUserId,
     // updateMutation,
   };

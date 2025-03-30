@@ -4,3 +4,10 @@ export interface iResponse {
   isAccountVerified?: boolean;
   data?: [];
 }
+
+export interface IAPCodeResponse<T> {
+  status: boolean;
+  message: string;
+  isAccountVerified?: boolean;
+  data?: T;
+}

@@ -29,7 +29,9 @@ export const registerViaEmail = (
     });
 };
 
-export const loginViaEmail = (payload: Partial<IUser>): Promise<iResponse> => {
+export const loginViaEmail = (
+  payload: Partial<IUser>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/login`, {
     method: "POST",
     body: JSON.stringify(payload),
@@ -94,7 +96,9 @@ export const sendVerifyOtp = (): Promise<iResponse> => {
     });
 };
 
-export const verifyOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
+export const verifyOtp = (
+  verifyOtp: Partial<IUser>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/verify-account`, {
     method: "POST",
     body: JSON.stringify(verifyOtp),
@@ -116,7 +120,9 @@ export const verifyOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
     });
 };
 
-export const sendResetOtp = (email: Partial<IUser>): Promise<iResponse> => {
+export const sendResetOtp = (
+  email: Partial<IUser>
+): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/send-reset-otp`, {
     method: "POST",
     body: JSON.stringify(email),
@@ -164,7 +170,9 @@ export const resetPassword = (
 
 //  ! this will be post method for sending the code
 
-export const accessGithub = (code: { code: string }): Promise<iResponse> => {
+export const accessGithub = (code: {
+  code: string;
+}): Promise<iResponse> => {
   return fetch(`${SERVER_URL}/api/auth/get-access-token`, {
     method: "POST",
     body: JSON.stringify(code),

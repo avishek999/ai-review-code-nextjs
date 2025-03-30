@@ -5,12 +5,9 @@ import ChatScreen from "@/components/chatScreen/ChatScreen";
 import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
-import {
-  getAllCodeReviewById,
-  getAllCodesReviewBUserId,
-  sendCodeForReview,
-} from "@/services/api";
 import { ICodeReview } from "@/interface/code";
+import { useDoctorPrescriptionQuery } from "@/hooks/useReactQuery";
+import { iResponse } from "@/interface/common";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -35,12 +32,13 @@ const Home: React.FC = () => {
     chat: [],
   });
 
-  const monaco = useMonaco();
+  const { createMutation, usePrefetchByUserId } = useDoctorPrescriptionQuery();
+  const { data, isLoading } = usePrefetchByUserId();
 
-  useEffect(() => {
-    getAllCodesReviewBUserId();
-    getAllCodeReviewById({ _id: "67e58698c0bc5884ce0628d5" });
-  }, []);
+ 
+  const getAllCodeByUSerId: iResponse = data as iResponse;
+
+  const monaco = useMonaco();
 
   useEffect(() => {
     if (monaco) {
@@ -57,7 +55,6 @@ const Home: React.FC = () => {
     }
   }, [monaco]);
 
-  console.log("getCodeAfterReview", getCodeAfterReview);
   /** ================== useEffect end ================== */
 
   const handlePrintCode = async () => {
@@ -65,10 +62,9 @@ const Home: React.FC = () => {
       UserInputCode: Fullcode,
       message: message,
     };
-    console.log(payload);
 
     try {
-      const response = await sendCodeForReview(payload);
+      const response = await createMutation.mutateAsync(payload);
 
       if (response === undefined) return;
 
@@ -78,12 +74,16 @@ const Home: React.FC = () => {
     }
   };
 
+  if (isLoading) {
+    return <div>Loading....</div>;
+  }
+
   return (
     <>
       <HomeNavBar handlePrintCode={handlePrintCode} />
       <div className="flex h-[calc(100vh-76.8px)]">
         <div className="w-[20%]    ">
-          <SideBar />
+          <SideBar getAllCodeByUSerId={getAllCodeByUSerId} />
         </div>
 
         <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
