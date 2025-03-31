@@ -1,3 +1,4 @@
+import { useDoctorPrescriptionQuery } from "@/hooks/useReactQuery";
 import { ICodeReview } from "@/interface/code";
 import { iResponse } from "@/interface/common";
 import React from "react";
@@ -8,9 +9,20 @@ interface ISideBar {
 }
 
 const SideBar: React.FC<ISideBar> = ({ getAllCodeByUSerId }) => {
-  // console.log(getAllCodeByUSerId.data?.map((data, index) => data));
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
-  console.log(getAllCodeByUSerId);
+  const { usePrefetchAllById } = useDoctorPrescriptionQuery();
+
+  const { data, isLoading, error } = usePrefetchAllById(selectedId || "");
+
+  if (isLoading) console.log("Loading...");
+  if (error) console.log("Error:", error);
+
+  const getReviewedCodeById = (id: string) => {
+    setSelectedId(id);
+
+    console.log("Reviewed Code Data:", data);
+  };
   return (
     <div className=" p-4 overflow-hidden">
       <div className="flex justify-between">
@@ -27,6 +39,9 @@ const SideBar: React.FC<ISideBar> = ({ getAllCodeByUSerId }) => {
             <div
               key={index}
               className=" cursor-pointer px-2 py-2 text-[var(--secondary-color)]  bg-[var(--accent-color1)] flex gap-3 items-center"
+              onClick={() => {
+                getReviewedCodeById(reviewedCode._id ?? "");
+              }}
             >
               <FaRegFileCode />
               {reviewedCode.filename}

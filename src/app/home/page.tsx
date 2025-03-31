@@ -35,7 +35,6 @@ const Home: React.FC = () => {
   const { createMutation, usePrefetchByUserId } = useDoctorPrescriptionQuery();
   const { data, isLoading } = usePrefetchByUserId();
 
- 
   const getAllCodeByUSerId: iResponse = data as iResponse;
 
   const monaco = useMonaco();
@@ -66,9 +65,9 @@ const Home: React.FC = () => {
     try {
       const response = await createMutation.mutateAsync(payload);
 
-      if (response === undefined) return;
-
-      setCodeAfterReview(response.data as ICodeReview);
+      if (response !== undefined) {
+        setCodeAfterReview(response.data as ICodeReview);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +82,10 @@ const Home: React.FC = () => {
       <HomeNavBar handlePrintCode={handlePrintCode} />
       <div className="flex h-[calc(100vh-76.8px)]">
         <div className="w-[20%]    ">
-          <SideBar getAllCodeByUSerId={getAllCodeByUSerId} />
+          <SideBar
+            getAllCodeByUSerId={getAllCodeByUSerId}
+        
+          />
         </div>
 
         <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">

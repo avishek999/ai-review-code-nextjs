@@ -16,6 +16,7 @@ interface IChatMessage {
 }
 
 export interface ICodeReview {
+  _id?: string;
   userId?: string;
   filename?: string;
   UserInputCode?: string;
