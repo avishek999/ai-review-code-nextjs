@@ -31,7 +31,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--error-text-color)] bg-[var(--error-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              {getCodeAfterReview.feedback?.errors.length}
+              {getCodeAfterReview?.feedback?.errors.length}
             </div>
           </div>
           <div className="flex justify-between">
@@ -44,7 +44,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--warning-text-color)] bg-[var(--warning-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              {getCodeAfterReview.feedback?.warnings.length}
+              {getCodeAfterReview?.feedback?.warnings.length}
             </div>
           </div>
           <div className="flex justify-between ">
@@ -57,7 +57,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               </div>
             </div>
             <div className="text-[var(--improvement-text-color)] bg-[var(--improvement-background-color)] h-6 w-6 rounded-full flex items-center justify-center">
-              {getCodeAfterReview.feedback?.improvements.length}
+              {getCodeAfterReview?.feedback?.improvements.length}
             </div>
           </div>
         </div>

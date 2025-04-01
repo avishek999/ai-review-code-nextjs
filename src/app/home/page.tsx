@@ -41,6 +41,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (monaco) {
+      console.log(monaco);
       monaco.editor.defineTheme("customTheme", {
         base: "vs-dark",
         inherit: true,
@@ -80,11 +81,11 @@ const Home: React.FC = () => {
   return (
     <>
       <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex h-[calc(100vh-76.8px)]">
+      <div className="flex h-[calc(100vh-120.8px)]">
         <div className="w-[20%]    ">
           <SideBar
             getAllCodeByUSerId={getAllCodeByUSerId}
-        
+            setCodeAfterReview={setCodeAfterReview}
           />
         </div>
 
@@ -93,8 +94,8 @@ const Home: React.FC = () => {
             <Editor
               height="100%"
               defaultLanguage="javascript"
-              defaultValue={getCodeAfterReview.improvedCode}
-              value={getCodeAfterReview.improvedCode}
+              defaultValue={getCodeAfterReview?.improvedCode}
+              value={getCodeAfterReview?.improvedCode}
               theme="CustomTheme"
               onChange={(value) => setCode(value || "")}
               options={{
