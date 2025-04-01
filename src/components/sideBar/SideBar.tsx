@@ -1,7 +1,7 @@
 import { ICodeReview } from "@/interface/code";
 import { iResponse } from "@/interface/common";
 import { getAllCodeReviewById } from "@/services/api";
-import React  from "react";
+import React from "react";
 import { FaRegFileCode } from "react-icons/fa6";
 
 interface ISideBar {
@@ -14,7 +14,6 @@ const SideBar: React.FC<ISideBar> = ({
   setCodeAfterReview,
 }) => {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
-
 
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
@@ -32,9 +31,11 @@ const SideBar: React.FC<ISideBar> = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 mt-3 h-[calc(100vh-140.8px)] overflow-y-auto">
-        {getAllCodeByUSerId.data?.map(
-          (reviewedCode: ICodeReview, index: number) => (
+      <div className="flex flex-col gap-4 mt-3 h-[calc(100vh-200.8px)] overflow-y-auto">
+        {getAllCodeByUSerId.data
+          ?.slice()
+          .reverse()
+          .map((reviewedCode: ICodeReview, index: number) => (
             <div
               key={index}
               className={`cursor-pointer px-2 py-2 ${
@@ -47,8 +48,7 @@ const SideBar: React.FC<ISideBar> = ({
               <FaRegFileCode />
               {reviewedCode.filename}
             </div>
-          )
-        )}
+          ))}
       </div>
     </div>
   );

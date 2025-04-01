@@ -8,6 +8,8 @@ import HomeNavBar from "@/components/navbar/HomeNavBar";
 import { ICodeReview } from "@/interface/code";
 import { useDoctorPrescriptionQuery } from "@/hooks/useReactQuery";
 import { iResponse } from "@/interface/common";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -39,9 +41,11 @@ const Home: React.FC = () => {
 
   const monaco = useMonaco();
 
+  const queryClient = useQueryClient();
+
   useEffect(() => {
     if (monaco) {
-      console.log(monaco);
+      console.log("monaco", monaco);
       monaco.editor.defineTheme("customTheme", {
         base: "vs-dark",
         inherit: true,
@@ -68,6 +72,7 @@ const Home: React.FC = () => {
 
       if (response !== undefined) {
         setCodeAfterReview(response.data as ICodeReview);
+        queryClient.invalidateQueries({ queryKey: [QUERY_REVIEWED_CODE_KEY] });
       }
     } catch (error) {
       console.log(error);
@@ -96,7 +101,7 @@ const Home: React.FC = () => {
               defaultLanguage="javascript"
               defaultValue={getCodeAfterReview?.improvedCode}
               value={getCodeAfterReview?.improvedCode}
-              theme="CustomTheme"
+              theme="customTheme"
               onChange={(value) => setCode(value || "")}
               options={{
                 minimap: { enabled: false },
