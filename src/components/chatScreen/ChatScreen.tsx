@@ -15,10 +15,10 @@ const ChatScreen: React.FC<IchatMessage> = ({
   getCodeAfterReview,
 }) => {
   return (
-    <div className="p-4 relative h-full w-full overflow-auto">
+    <div className="p-4 relative h-full w-full ">
       {/* ===================== review overview  ===================== */}
 
-      <div className="border-b border-[var(--secondary-text-color)] py-3">
+      <div className=" sticky top-0 left-0 border-b border-[var(--secondary-text-color)] py-3 bg-[var(--primary-background-color)]">
         <div className="text-md font-semibold ">Review Summary</div>
         <div className="flex flex-col gap-3 mt-5">
           <div className="flex justify-between">
@@ -65,7 +65,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== review card  ===================== */}
 
-      <div className="flex flex-col gap-3 mt-5 overflow-auto h-[400px]:">
+      <div className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56">
         {getCodeAfterReview.feedback?.errors.map((error, index) => (
           <div
             className=" bg-[var(--error-background-color)] px-4 py-5 "
@@ -88,27 +88,27 @@ const ChatScreen: React.FC<IchatMessage> = ({
           </div>
         ))}
 
-        {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
-          <div className="flex flex-col gap-3 " key={index}>
-            <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
-              <div className="text-[var(--improvement-text-color)] ">
-                Improvement: {improvement.title}
+          {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
+            <div className="flex flex-col gap-3 " key={index}>
+              <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
+                <div className="text-[var(--improvement-text-color)] ">
+                  Improvement: {improvement.title}
+                </div>
+                <div className="text-sm mt-2">{improvement.message}</div>
               </div>
-              <div className="text-sm mt-2">{improvement.message}</div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
       {/* ===================== send input ===================== */}
 
-      <div className="fixed bottom-0 w-[90%] pt-4 border-t border-[var(--secondary-text-color)] bg-[#111825]">
+      <div className="fixed bottom-0  w-full pt-4 border-t border-[var(--secondary-text-color)] bg-[#111825]">
         <div className="py-3 flex flex-col items-center bg-[var(--secondary-background-color)]">
           <div className="flex w-full justify-center items-center">
             <input
               type="text"
               placeholder="Ask AI about the code"
-              className="w-[90%] outline-none bg-[var(--secondary-background-color)]"
+              className="w-full outline-none bg-[var(--secondary-background-color)] transform translate-x-4"
               onChange={(e) => setMessage(e.target.value)}
             />
           </div>

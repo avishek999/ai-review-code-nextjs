@@ -72,6 +72,7 @@ const Home: React.FC = () => {
 
       if (response !== undefined) {
         setCodeAfterReview(response.data as ICodeReview);
+
         queryClient.invalidateQueries({ queryKey: [QUERY_REVIEWED_CODE_KEY] });
       }
     } catch (error) {
@@ -86,7 +87,7 @@ const Home: React.FC = () => {
   return (
     <>
       <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex h-[calc(100vh-120.8px)]">
+      <div className="flex ">
         <div className="w-[20%]    ">
           <SideBar
             getAllCodeByUSerId={getAllCodeByUSerId}
@@ -111,7 +112,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-[25%]   ">
+        <div className="w-[25%] h-full   ">
           <ChatScreen
             setMessage={setMessage}
             getCodeAfterReview={getCodeAfterReview}
