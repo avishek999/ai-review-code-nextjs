@@ -3,6 +3,7 @@ import { iResponse } from "@/interface/common";
 import { getAllCodeReviewById } from "@/services/api";
 import React from "react";
 import { FaRegFileCode } from "react-icons/fa6";
+import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
 
 interface ISideBar {
   getAllCodeByUSerId: iResponse;
@@ -31,7 +32,7 @@ const SideBar: React.FC<ISideBar> = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 mt-3 h-[calc(100vh-200.8px)] overflow-y-auto">
+      <CustomScrollbar className="flex flex-col gap-4 mt-3 h-[calc(100vh-157.8px)] overflow-y-auto">
         {getAllCodeByUSerId.data
           ?.slice()
           .reverse()
@@ -49,7 +50,7 @@ const SideBar: React.FC<ISideBar> = ({
               {reviewedCode.filename}
             </div>
           ))}
-      </div>
+      </CustomScrollbar>
     </div>
   );
 };

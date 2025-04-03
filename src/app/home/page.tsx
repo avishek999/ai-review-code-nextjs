@@ -87,7 +87,7 @@ const Home: React.FC = () => {
   return (
     <>
       <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex ">
+      <div className="flex h-[calc(100%-76.8px)]">
         <div className="w-[20%]    ">
           <SideBar
             getAllCodeByUSerId={getAllCodeByUSerId}
@@ -112,7 +112,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-[25%] h-full   ">
+        <div className="w-[25%] sdjkafl;h-full   ">
           <ChatScreen
             setMessage={setMessage}
             getCodeAfterReview={getCodeAfterReview}

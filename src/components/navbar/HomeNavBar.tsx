@@ -4,12 +4,11 @@ import { FaCode } from "react-icons/fa6";
 import { MdHistory } from "react-icons/md";
 import AnimatedReviewButton from "../buttons/RunButton";
 
-
-interface IHomeNav{
-  handlePrintCode:() => void
+interface IHomeNav {
+  handlePrintCode: () => void;
 }
 
-const HomeNavBar:React.FC<IHomeNav> = ({handlePrintCode}) => {
+const HomeNavBar: React.FC<IHomeNav> = ({ handlePrintCode }) => {
   return (
     <nav className="  bg-[var(--primary-background-color)] px-6 md:px-14 pt-6 pb-3 flex justify-between items-center border-b border-gray-800 ">
       <div className="flex gap-10 items-center">
