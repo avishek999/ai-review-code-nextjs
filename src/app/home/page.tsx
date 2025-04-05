@@ -10,6 +10,7 @@ import { useDoctorPrescriptionQuery } from "@/hooks/useReactQuery";
 import { iResponse } from "@/interface/common";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
+import Loader from "@/components/loader/Loader";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -81,7 +82,7 @@ const Home: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading....</div>;
+    return <Loader />;
   }
 
   return (

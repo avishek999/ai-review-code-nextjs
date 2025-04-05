@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
 /** icons */
 import { FaCode, FaGithub } from "react-icons/fa6";
 
@@ -15,7 +14,6 @@ import { Toast } from "@/components/toast/toast";
 import { CLIENT_ID } from "@/services/config";
 import {
   accessGithub,
-  
   loginViaEmail,
   registerViaEmail,
   resetPassword,
@@ -66,12 +64,13 @@ const Signin: React.FC = () => {
     console.log(codeParam);
   }, []);
 
+
+
   useEffect(() => {
     setTimeout(() => {
       setToastVisible(false);
     }, 2000);
-  }, [isToastVisible]);
-
+  }, []);
 
   /** ================== useEffect end ================== */
 

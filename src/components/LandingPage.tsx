@@ -9,16 +9,21 @@ import { FaBug, FaCode, FaRobot } from "react-icons/fa6";
 import { BiSolidError } from "react-icons/bi";
 
 /** user defined component */
-import PrimaryButton from "@/components/buttons/PrimaryButton";
-import SecondaryButton from "@/components/buttons/SecondaryButton";
+// import PrimaryButton from "@/components/buttons/PrimaryButton";
+// import SecondaryButton from "@/components/buttons/SecondaryButton";
 import Card1 from "@/components/cards/Card1";
 import Cta from "@/components/cta/Cta";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { div } from "framer-motion/client";
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+
   /** ================== useEffect start ================== */
 
   useEffect(() => {
@@ -38,7 +43,11 @@ const LandingPage: React.FC = () => {
       duration: 3,
       ease: "power2.out",
     });
-  }, []);
+
+    setTimeout(() => {
+      return <div>loading..</div>;
+    }, 2000);
+  }, [searchParams]);
 
   const monaco = useMonaco();
 
@@ -85,8 +94,53 @@ const LandingPage: React.FC = () => {
         </p>
 
         <div className="flex gap-5 mt-5">
-          <PrimaryButton title="Try for Free" href="'/signup" />
-          <SecondaryButton title="Documentation" href="/documentation" />
+          {/* <PrimaryButton title="Try for Free" href="'/signup" /> */}
+          {/* <SecondaryButton title="Documentation" href="/documentation" /> */}
+
+          <div className="relative inline-flex items-center justify-center gap-4 group mt-2">
+            <div className="absolute inset-0 duration-1000 opacity-60 transitiona-all bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 rounded-xl blur-lg filter group-hover:opacity-100 group-hover:duration-200"></div>
+            <a
+              role="button"
+              className="group relative inline-flex items-center justify-center text-base rounded-xl bg-gray-900 px-8 py-3 font-semibold text-white transition-all duration-200 hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 hover:shadow-gray-600/30"
+              title="payment"
+              href="#"
+            >
+              Get Started For Free
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 10 10"
+                height="10"
+                width="10"
+                fill="none"
+                className="mt-0.5 ml-2 -mr-1 stroke-white stroke-2"
+              >
+                <path
+                  d="M0 5h7"
+                  className="transition opacity-0 group-hover:opacity-100"
+                ></path>
+                <path
+                  d="M1 1l4 4-4 4"
+                  className="transition group-hover:translate-x-[3px]"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="img_container  flex justify-center transform -translate-y-10">
+        <div className="bg-[#1F2937] border rounded-3xl border-gray-700   ">
+          <div className="flex gap-2 px-5 py-3">
+            <div className="p-[6px] rounded-full bg-red-500 w-fit"></div>
+            <div className="p-[6px] rounded-full bg-yellow-500 w-fit"></div>
+            <div className="p-[6px] rounded-full bg-green-500 w-fit"></div>
+          </div>
+          <Image
+            width={1200}
+            height={500}
+            src="/Images/home-page/home-screen-shot.png"
+            alt=""
+          />
         </div>
       </div>
       <div className=" w-full flex flex-col gap-20  overflow-x-hidden">
@@ -124,7 +178,7 @@ const LandingPage: React.FC = () => {
                   height="149px"
                   defaultLanguage="javascript"
                   defaultValue={code}
-                  theme="CustomTheme"
+                  theme="customTheme"
                   options={{
                     minimap: { enabled: false },
                     readOnly: true,
