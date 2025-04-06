@@ -1,10 +1,10 @@
-interface IErrorDetail {
+export interface IErrorDetail {
   line: number;
   title: string;
   message: string;
 }
 
-interface IFeedback {
+ interface IFeedback {
   errors: IErrorDetail[];
   warnings: IErrorDetail[];
   improvements: IErrorDetail[];

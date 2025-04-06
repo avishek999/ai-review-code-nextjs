@@ -67,10 +67,22 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== review card  ===================== */}
 
-      <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
-        <CardStack />
+      <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 ">
+        <CardStack
+          codeReviewMapData={getCodeAfterReview.feedback?.errors || []}
+          color="var(--error-background-color)"
+        />
 
-        {getCodeAfterReview.feedback?.errors.map((error, index) => (
+        <CardStack
+          codeReviewMapData={getCodeAfterReview.feedback?.warnings || []}
+          color="var(--warning-background-color)"
+        />
+        <CardStack
+          codeReviewMapData={getCodeAfterReview.feedback?.improvements || []}
+          color="var(--improvement-background-color)"
+        />
+
+        {/* {getCodeAfterReview.feedback?.errors.map((error, index) => (
           <div
             className=" bg-[var(--error-background-color)] px-4 py-5 "
             key={index}
@@ -80,8 +92,8 @@ const ChatScreen: React.FC<IchatMessage> = ({
             </div>
             <div className="text-sm ">{error.message}</div>
           </div>
-        ))}
-        {getCodeAfterReview.feedback?.warnings.map((warning, index) => (
+        ))} */}
+        {/* {getCodeAfterReview.feedback?.warnings.map((warning, index) => (
           <div className="flex flex-col gap-3 " key={index}>
             <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
               <div className="text-[var(--warning-text-color)] ">
@@ -90,8 +102,8 @@ const ChatScreen: React.FC<IchatMessage> = ({
               <div className="text-sm mt-2">{warning.message}</div>
             </div>
           </div>
-        ))}
-
+        ))} */}
+        {/* 
         {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
           <div className="flex flex-col gap-3 " key={index}>
             <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
@@ -101,7 +113,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
               <div className="text-sm mt-2">{improvement.message}</div>
             </div>
           </div>
-        ))}
+        ))} */}
       </CustomScrollbar>
 
       {/* ===================== send input ===================== */}
