@@ -11,6 +11,7 @@ import { iResponse } from "@/interface/common";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
 import Loader from "@/components/loader/Loader";
+import EditorSpinnerLoaderd from "@/components/loader/EditorSpinnerLoaderd";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -35,7 +36,9 @@ const Home: React.FC = () => {
     chat: [],
   });
 
-  const { createMutation, usePrefetchByUserId } = useDoctorPrescriptionQuery();
+  const { updateMutation, createMutation, usePrefetchByUserId } =
+    useDoctorPrescriptionQuery();
+
   const { data, isLoading } = usePrefetchByUserId();
 
   const getAllCodeByUSerId: iResponse = data as iResponse;
@@ -64,12 +67,19 @@ const Home: React.FC = () => {
 
   const handlePrintCode = async () => {
     const payload = {
+      _id: getCodeAfterReview._id,
       UserInputCode: Fullcode,
       message: message,
     };
 
     try {
-      const response = await createMutation.mutateAsync(payload);
+      let response = {};
+
+      if (!payload._id) {
+        response = await createMutation.mutateAsync(payload);
+      } else {
+        response = await updateMutation.mutateAsync(payload);
+      }
 
       if (response !== undefined) {
         setCodeAfterReview(response.data as ICodeReview);
@@ -98,22 +108,26 @@ const Home: React.FC = () => {
 
         <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
           <div className=" h-full">
-            <Editor
-              height="100%"
-              defaultLanguage="javascript"
-              defaultValue={getCodeAfterReview?.improvedCode}
-              value={getCodeAfterReview?.improvedCode}
-              theme="customTheme"
-              onChange={(value) => setCode(value || "")}
-              options={{
-                minimap: { enabled: false },
-                readOnly: false,
-              }}
-            />
+            {createMutation.isPending || updateMutation.isPending ? (
+              <EditorSpinnerLoaderd />
+            ) : (
+              <Editor
+                height="100%"
+                defaultLanguage="javascript"
+                defaultValue={getCodeAfterReview?.improvedCode}
+                value={getCodeAfterReview?.improvedCode}
+                theme="customTheme"
+                onChange={(value) => setCode(value || "")}
+                options={{
+                  minimap: { enabled: false },
+                  readOnly: false,
+                }}
+              />
+            )}
           </div>
         </div>
 
-        <div className="w-[25%] sdjkafl;h-full   ">
+        <div className="w-[25%] h-full   ">
           <ChatScreen
             setMessage={setMessage}
             getCodeAfterReview={getCodeAfterReview}

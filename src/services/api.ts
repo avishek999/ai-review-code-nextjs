@@ -258,4 +258,28 @@ export const getAllCodeReviewById = (_id: {
     });
 };
 
+export const updateCodeForReview = (
+  payload: Partial<ICodeReview>
+): Promise<iResponse> => {
+  return fetch(`${SERVER_URL}/api/codeReview/update-reviewed-code`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log("response", res.token);
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
 /**----------------------- CodeReview api end ----------------------------- */

@@ -1,3 +1,5 @@
+"use client";
+
 import { ICodeReview } from "@/interface/code";
 import { iResponse } from "@/interface/common";
 import { getAllCodeReviewById } from "@/services/api";
@@ -18,38 +20,68 @@ const SideBar: React.FC<ISideBar> = ({
 
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
+
     const response = await getAllCodeReviewById({ _id: _id });
 
     setCodeAfterReview(response.data as ICodeReview);
+  };
+
+  const handleNewFile = () => {
+    setCodeAfterReview({
+      userId: "",
+      filename: "",
+      UserInputCode: "",
+      feedback: {
+        errors: [],
+        warnings: [],
+        improvements: [],
+      },
+      improvedCode: `function calculateTotal(items) {
+        int total = 1;
+        for(int items of items){
+        total += items.price;
+        }
+        return total;
+      }
+        `,
+      chat: [],
+    });
   };
 
   return (
     <div className="p-4 overflow-hidden">
       <div className="flex justify-between">
         <div className="text-[18px] font-semibold">Files</div>
-        <div className="text-[var(--secondary-color)] text-3xl cursor-pointer">
+        <div
+          className="text-[var(--secondary-color)] text-3xl cursor-pointer"
+          onClick={handleNewFile}
+        >
           +
         </div>
       </div>
 
       <CustomScrollbar className="flex flex-col gap-4 mt-3 h-[calc(100vh-157.8px)] overflow-y-auto">
-        {getAllCodeByUSerId.data
-          ?.slice()
-          .reverse()
-          .map((reviewedCode: ICodeReview, index: number) => (
-            <div
-              key={index}
-              className={`cursor-pointer px-2 py-2 ${
-                selectedId === reviewedCode._id
-                  ? "bg-[var(--primary-color)] text-white"
-                  : "text-[var(--secondary-color)] bg-[var(--accent-color1)]"
-              } flex gap-3 items-center`}
-              onClick={() => getReviewedCodeById(reviewedCode._id ?? "")}
-            >
-              <FaRegFileCode />
-              {reviewedCode.filename}
-            </div>
-          ))}
+        {getAllCodeByUSerId?.data?.length === 0 ? (
+          <div>No data</div>
+        ) : (
+          getAllCodeByUSerId.data
+            ?.slice()
+            .reverse()
+            .map((reviewedCode: ICodeReview, index: number) => (
+              <div
+                key={index}
+                className={`cursor-pointer px-2 py-2 ${
+                  selectedId === reviewedCode._id
+                    ? "bg-[var(--primary-color)] text-white"
+                    : "text-[var(--secondary-color)] bg-[var(--accent-color1)]"
+                } flex gap-3 items-center`}
+                onClick={() => getReviewedCodeById(reviewedCode._id ?? "")}
+              >
+                <FaRegFileCode />
+                {reviewedCode.filename}
+              </div>
+            ))
+        )}
       </CustomScrollbar>
     </div>
   );

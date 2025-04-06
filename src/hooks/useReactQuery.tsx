@@ -6,6 +6,7 @@ import {
   getAllCodeReviewById,
   getAllCodesReviewBUserId,
   sendCodeForReview,
+  updateCodeForReview,
 } from "@/services/api";
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 
@@ -35,14 +36,14 @@ export const useDoctorPrescriptionQuery = () => {
     });
   };
 
-  //   const updateMutation = useMutation({
-  //     mutationFn: updatePrescriptionById,
-  //     onSuccess: async () => {
-  //       await ProviderQueryClient.invalidateQueries({
-  //         queryKey: [QUERY_REVIEWED_CODE_KEY],
-  //       });
-  //     },
-  //   });
+    const updateMutation = useMutation({
+      mutationFn: updateCodeForReview,
+      onSuccess: async () => {
+        await ProviderQueryClient.invalidateQueries({
+          queryKey: [QUERY_REVIEWED_CODE_KEY],
+        });
+      },
+    });
 
   // -------------------------------------------  Prescription Config start -------------------------------------------
 
@@ -52,6 +53,6 @@ export const useDoctorPrescriptionQuery = () => {
     createMutation,
     usePrefetchAllById,
     usePrefetchByUserId,
-    // updateMutation,
+    updateMutation,
   };
 };

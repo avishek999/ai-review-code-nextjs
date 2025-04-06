@@ -6,6 +6,7 @@ import { FaLightbulb } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
 import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
+import CardStack from "../cardStack/CardStcak";
 
 interface IchatMessage {
   setMessage: (message: string) => void;
@@ -66,7 +67,9 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== review card  ===================== */}
 
-      <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56">
+      <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
+        <CardStack />
+
         {getCodeAfterReview.feedback?.errors.map((error, index) => (
           <div
             className=" bg-[var(--error-background-color)] px-4 py-5 "
@@ -89,17 +92,17 @@ const ChatScreen: React.FC<IchatMessage> = ({
           </div>
         ))}
 
-          {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
-            <div className="flex flex-col gap-3 " key={index}>
-              <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
-                <div className="text-[var(--improvement-text-color)] ">
-                  Improvement: {improvement.title}
-                </div>
-                <div className="text-sm mt-2">{improvement.message}</div>
+        {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
+          <div className="flex flex-col gap-3 " key={index}>
+            <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
+              <div className="text-[var(--improvement-text-color)] ">
+                Improvement: {improvement.title}
               </div>
+              <div className="text-sm mt-2">{improvement.message}</div>
             </div>
-          ))}
-        </CustomScrollbar>
+          </div>
+        ))}
+      </CustomScrollbar>
 
       {/* ===================== send input ===================== */}
 
