@@ -6,7 +6,6 @@ import { FaLightbulb } from "react-icons/fa6";
 import { MdWarning } from "react-icons/md";
 import { TbXboxXFilled } from "react-icons/tb";
 import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
-import CardStack from "../cardStack/CardStcak";
 
 interface IchatMessage {
   setMessage: (message: string) => void;
@@ -68,8 +67,6 @@ const ChatScreen: React.FC<IchatMessage> = ({
       {/* ===================== review card  ===================== */}
 
       <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
-        <CardStack />
-
         {getCodeAfterReview.feedback?.errors.map((error, index) => (
           <div
             className=" bg-[var(--error-background-color)] px-4 py-5 "
@@ -101,6 +98,10 @@ const ChatScreen: React.FC<IchatMessage> = ({
               <div className="text-sm mt-2">{improvement.message}</div>
             </div>
           </div>
+        ))}
+
+        {getCodeAfterReview.chat?.map((chat, index) => (
+          <div className="text-end px-4 py-3 bg-gray-500 w-fit" key={index}>{chat.message}</div>
         ))}
       </CustomScrollbar>
 
