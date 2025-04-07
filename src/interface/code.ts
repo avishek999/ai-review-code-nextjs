@@ -13,6 +13,7 @@ interface IFeedback {
 interface IChatMessage {
   message: string;
   timestamp?: Date;
+  botMsg: string;
 }
 
 export interface ICodeReview {

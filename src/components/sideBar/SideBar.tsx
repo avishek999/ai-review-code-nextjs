@@ -1,14 +1,13 @@
 "use client";
 
 import { ICodeReview } from "@/interface/code";
-import { iResponse } from "@/interface/common";
 import { getAllCodeReviewById } from "@/services/api";
-import React from "react";
+import React, { useState } from "react";
 import { FaRegFileCode } from "react-icons/fa6";
 import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
 
 interface ISideBar {
-  getAllCodeByUSerId: iResponse;
+  getAllCodeByUSerId: ICodeReview[];
   setCodeAfterReview: (arg0: ICodeReview) => void;
 }
 
@@ -16,7 +15,9 @@ const SideBar: React.FC<ISideBar> = ({
   getAllCodeByUSerId,
   setCodeAfterReview,
 }) => {
-  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(
+    (getAllCodeByUSerId?.at(-1)?._id as string) || null
+  );
 
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
@@ -61,20 +62,27 @@ const SideBar: React.FC<ISideBar> = ({
       </div>
 
       <CustomScrollbar className="flex flex-col gap-4 mt-3 h-[calc(100vh-157.8px)] overflow-y-auto">
-        {getAllCodeByUSerId?.data?.length === 0 ? (
-          <div>No data</div>
+        {getAllCodeByUSerId.length === 0 ? (
+          <div
+            className={`cursor-pointer px-2 py-2 
+          bg-[var(--primary-color)] rounded-lg
+           flex gap-3 items-center text-gray-200`}
+          >
+            <FaRegFileCode />
+            sample.js
+          </div>
         ) : (
-          getAllCodeByUSerId.data
+          getAllCodeByUSerId
             ?.slice()
             .reverse()
-            .map((reviewedCode: ICodeReview, index: number) => (
+            .map((reviewedCode: ICodeReview, index) => (
               <div
                 key={index}
                 className={`cursor-pointer px-2 py-2 ${
                   selectedId === reviewedCode._id
-                    ? "bg-[var(--primary-color)] text-white"
-                    : "text-[var(--secondary-color)] bg-[var(--accent-color1)]"
-                } flex gap-3 items-center`}
+                    ? "bg-[var(--primary-color)] "
+                    : ""
+                } flex gap-3 items-center text-gray-200 rounded-lg`}
                 onClick={() => getReviewedCodeById(reviewedCode._id ?? "")}
               >
                 <FaRegFileCode />

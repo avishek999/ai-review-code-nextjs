@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
   const { data, isLoading } = usePrefetchByUserId();
 
-  const getAllCodeByUSerId: iResponse = data as iResponse;
+  const getAllCodeByUSerId = data as iResponse;
 
   const monaco = useMonaco();
 
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
       }
 
       if (response !== undefined) {
-        setCodeAfterReview(response.data as ICodeReview);
+        setCodeAfterReview(response as ICodeReview);
 
         queryClient.invalidateQueries({ queryKey: [QUERY_REVIEWED_CODE_KEY] });
       }
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
       <div className="flex h-[calc(100%-76.8px)]">
         <div className="w-[20%]    ">
           <SideBar
-            getAllCodeByUSerId={getAllCodeByUSerId}
+            getAllCodeByUSerId={getAllCodeByUSerId.data || []}
             setCodeAfterReview={setCodeAfterReview}
           />
         </div>

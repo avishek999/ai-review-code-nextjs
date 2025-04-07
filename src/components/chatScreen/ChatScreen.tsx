@@ -101,7 +101,18 @@ const ChatScreen: React.FC<IchatMessage> = ({
         ))}
 
         {getCodeAfterReview.chat?.map((chat, index) => (
-          <div className="text-end px-4 py-3 bg-gray-500 w-fit" key={index}>{chat.message}</div>
+          <div key={index}>
+            <div className="flex justify-start">
+              <div className=" px-4 py-3 bg-gray-600 w-fit rounded-s-xl rounded-b-md">
+                {chat.botMsg}
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <div className=" px-4 py-3 bg-gray-500 w-fit rounded-s-xl rounded-b-md">
+                {chat.message}
+              </div>
+            </div>
+          </div>
         ))}
       </CustomScrollbar>
 
