@@ -72,16 +72,16 @@ const LandingPage: React.FC = () => {
 }
   `;
   return (
-    <>
+    <div>
       {/* Hero section starts  */}
       <div
         ref={containerRef}
         // bg-[url('/Images/home-page/models.svg')] bg-no-repeat bg-start
-        className="w-full  h-[75%] flex justify-center flex-col items-center "
+        className="w-full h-[70vh]  flex justify-center flex-col items-center "
       >
         <h1
           ref={titleRef}
-          className="md:text-6xl text-4xl font-bold text-center flex  items-end"
+          className="lg:text-6xl text-4xl font-bold text-center flex  items-end"
         >
           AI-Powered Code Reviews for <br /> Modern Development
         </h1>
@@ -210,7 +210,7 @@ const LandingPage: React.FC = () => {
       {/* Cta section starts */}
 
       <Cta />
-    </>
+    </div>
   );
 };
 

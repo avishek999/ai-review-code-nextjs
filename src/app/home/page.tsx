@@ -13,8 +13,6 @@ import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
 import Loader from "@/components/loader/Loader";
 import EditorSpinnerLoaderd from "@/components/loader/EditorSpinnerLoaderd";
 
-
-
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
   const [message, setMessage] = useState("");
@@ -100,8 +98,8 @@ const Home: React.FC = () => {
   return (
     <>
       <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex h-[calc(100%-76.8px)]">
-        <div className="w-[20%]    ">
+      <div className="flex h-[calc(100%-76.8px)] flex-col md:flex-row">
+        <div className="w-[20%] hidden md:block    ">
           <SideBar
             getAllCodeByUSerId={getAllCodeByUSerId.data || []}
             setCodeAfterReview={setCodeAfterReview}
@@ -129,7 +127,7 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="w-[25%] h-full   ">
+        <div className="w-[25%] h-full  hidden md:block   ">
           <ChatScreen
             setMessage={setMessage}
             getCodeAfterReview={getCodeAfterReview}

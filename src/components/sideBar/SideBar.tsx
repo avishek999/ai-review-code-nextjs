@@ -16,9 +16,9 @@ const SideBar: React.FC<ISideBar> = ({
   setCodeAfterReview,
 }) => {
   const [selectedId, setSelectedId] = useState<string | null>(
-    (getAllCodeByUSerId?.at(-1)?._id as string) || null
+    null
   );
-
+  // (getAllCodeByUSerId?.at(-1)?._id as string) ||
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
 
