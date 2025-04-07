@@ -14,15 +14,12 @@ import { BiSolidError } from "react-icons/bi";
 import Card1 from "@/components/cards/Card1";
 import Cta from "@/components/cta/Cta";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { div } from "framer-motion/client";
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */
 
   const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const searchParams = useSearchParams();
 
   /** ================== useEffect start ================== */
 
@@ -47,7 +44,7 @@ const LandingPage: React.FC = () => {
     setTimeout(() => {
       return <div>loading..</div>;
     }, 2000);
-  }, [searchParams]);
+  }, []);
 
   const monaco = useMonaco();
 
@@ -128,21 +125,23 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="img_container  flex justify-center transform -translate-y-10">
-        <div className="bg-[#1F2937] border rounded-3xl border-gray-700   ">
-          <div className="flex gap-2 px-5 py-3">
-            <div className="p-[6px] rounded-full bg-red-500 w-fit"></div>
-            <div className="p-[6px] rounded-full bg-yellow-500 w-fit"></div>
-            <div className="p-[6px] rounded-full bg-green-500 w-fit"></div>
+      <div className="img_container flex justify-center transform -translate-y-10 px-4 md:px-8">
+        <div className="bg-[#1F2937] border rounded-3xl border-gray-700 w-full max-w-6xl overflow-hidden">
+          <div className="flex gap-2 px-3 py-1 md:px-5 md: md:py-3">
+            <div className="p-[3px] md:p-[6px] rounded-full bg-red-500"></div>
+            <div className="p-[3px] md:p-[6px] rounded-full bg-yellow-500"></div>
+            <div className="p-[3px] md:p-[6px] rounded-full bg-green-500"></div>
           </div>
           <Image
             width={1200}
             height={500}
             src="/Images/home-page/home-screen-shot.png"
             alt=""
+            className="w-full h-auto"
           />
         </div>
       </div>
+
       <div className=" w-full flex flex-col gap-20  overflow-x-hidden">
         {/* Card section starts */}
         <div className="  flex items-center justify-center gap-5  flex-col   md:flex-row ">
