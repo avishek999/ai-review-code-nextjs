@@ -66,55 +66,90 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== review card  ===================== */}
 
-      <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
-        {getCodeAfterReview.feedback?.errors.map((error, index) => (
-          <div
-            className=" bg-[var(--error-background-color)] px-4 py-5 "
-            key={index}
-          >
-            <div className="text-[var(--error-text-color)] ">
-              Error: {error.title}
-            </div>
-            <div className="text-sm ">{error.message}</div>
-          </div>
-        ))}
-        {getCodeAfterReview.feedback?.warnings.map((warning, index) => (
-          <div className="flex flex-col gap-3 " key={index}>
-            <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
-              <div className="text-[var(--warning-text-color)] ">
-                Warning: {warning.title}
+      {getCodeAfterReview.feedback?.errors.length !== 0 ||
+      getCodeAfterReview.feedback?.improvements.length !== 0 ||
+      getCodeAfterReview.feedback?.warnings.length !== 0 ? (
+        <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
+          {getCodeAfterReview.feedback?.errors.map((error, index) => (
+            <div
+              className=" bg-[var(--error-background-color)] px-4 py-5 "
+              key={index}
+            >
+              <div className="text-[var(--error-text-color)] ">
+                Error: {error.title}
               </div>
-              <div className="text-sm mt-2">{warning.message}</div>
+              <div className="text-sm ">{error.message}</div>
             </div>
-          </div>
-        ))}
+          ))}
+          {getCodeAfterReview.feedback?.warnings.map((warning, index) => (
+            <div className="flex flex-col gap-3 " key={index}>
+              <div className=" bg-[var(--warning-background-color)] px-4 py-5 ">
+                <div className="text-[var(--warning-text-color)] ">
+                  Warning: {warning.title}
+                </div>
+                <div className="text-sm mt-2">{warning.message}</div>
+              </div>
+            </div>
+          ))}
 
-        {getCodeAfterReview.feedback?.improvements.map((improvement, index) => (
-          <div className="flex flex-col gap-3 " key={index}>
-            <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
-              <div className="text-[var(--improvement-text-color)] ">
-                Improvement: {improvement.title}
+          {getCodeAfterReview.feedback?.improvements.map(
+            (improvement, index) => (
+              <div className="flex flex-col gap-3 " key={index}>
+                <div className=" bg-[var(--improvement-background-color)] px-4 py-5 ">
+                  <div className="text-[var(--improvement-text-color)] ">
+                    Improvement: {improvement.title}
+                  </div>
+                  <div className="text-sm mt-2">{improvement.message}</div>
+                </div>
               </div>
-              <div className="text-sm mt-2">{improvement.message}</div>
-            </div>
-          </div>
-        ))}
+            )
+          )}
 
-        {getCodeAfterReview.chat?.map((chat, index) => (
-          <div key={index}>
-            <div className="flex justify-start">
-              <div className=" px-4 py-3 bg-gray-600 w-fit rounded-s-xl rounded-b-md">
-                {chat.botMsg}
+          {getCodeAfterReview.chat?.map((chat, index) => (
+            <div key={index}>
+              <div className="flex justify-start">
+                <div className=" px-4 py-3 bg-gray-600 w-fit rounded-s-xl rounded-b-md">
+                  {chat.botMsg}
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <div className=" px-4 py-3 bg-gray-500 w-fit rounded-s-xl rounded-b-md">
+                  {chat.message}
+                </div>
               </div>
             </div>
-            <div className="flex justify-end">
-              <div className=" px-4 py-3 bg-gray-500 w-fit rounded-s-xl rounded-b-md">
-                {chat.message}
-              </div>
-            </div>
-          </div>
-        ))}
-      </CustomScrollbar>
+          ))}
+        </CustomScrollbar>
+      ) : (
+        <div className="max-w-md mx-auto mt-12 p-6 bg-[var(--third-background-color)] rounded-2xl shadow-2xl border border-[var(--secondary-color)] transition hover:scale-[1.02] duration-300">
+          <h2 className="text-3xl font-bold text-[var(--secondary-color)] mb-4">
+            How to Use
+          </h2>
+          <ol className="list-decimal list-inside text-white space-y-3 text-[15px] leading-relaxed">
+            <li>
+              <span className="text-[16px] font-medium text-white">
+                Type or paste
+              </span>{" "}
+              your code in the editor.
+            </li>
+            <li>
+              <span className="text-[16px] font-medium text-white">Write</span>{" "}
+              a message about what you want to ask or know.
+            </li>
+            <li>
+              <span className="text-[16px] font-medium text-white">Press</span>
+              <span className="font-semibold text-[var(--secondary-color)] mx-1">
+                Review
+              </span>
+              button.
+            </li>
+            <li>
+              <span className="text-[16px] font-medium text-white">Wait</span>{" "}
+              for the magic – your code will be reviewed instantly!
+            </li>
+          </ol>
+        </div>
+      )}
 
       {/* ===================== send input ===================== */}
 
