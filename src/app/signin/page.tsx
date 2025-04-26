@@ -57,18 +57,27 @@ const Signin: React.FC = () => {
 
   /** ==================  hooks end ================== */
   /** ================== useEffect start ================== */
-  // useEffect(() => {
-  //   const queryString = window.location.search;
-  //   const urlParams = new URLSearchParams(queryString);
-  //   const codeParam = urlParams.get("code");
-  //   console.log(codeParam);
-  // }, []);
+
 
   useEffect(() => {
     setTimeout(() => {
       setToastVisible(false);
     }, 2000);
   }, []);
+
+  
+  useEffect(() => {
+    // Check if there's a code in the URL
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const codeParam = urlParams.get("code");
+
+    // If code exists, process it automatically
+    if (codeParam) {
+      processGithubCode(codeParam);
+    }
+  }, []);
+
 
   /** ================== useEffect end ================== */
 
@@ -170,18 +179,6 @@ const Signin: React.FC = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    // Check if there's a code in the URL
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const codeParam = urlParams.get("code");
-
-    // If code exists, process it automatically
-    if (codeParam) {
-      processGithubCode(codeParam);
-    }
-  }, []);
 
   const processGithubCode = async (code: string) => {
     setLoading(true);
