@@ -8,7 +8,7 @@ const Loader = () => {
     gsap.to(".box", {
       scale: 3,
       filter: "blur(20px)",
-      duration: 0.3,
+      duration: 0.8,
       ease: "steps.inOut",
     });
   }, []);

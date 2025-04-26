@@ -171,44 +171,43 @@ const Signin: React.FC = () => {
     }
   };
 
-  const getGithubCode = async () => {
-    setLoading(true);
-
+  useEffect(() => {
+    // Check if there's a code in the URL
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
 
-    if (!codeParam) {
-      // Redirect to GitHub if there's no code in URL
-      window.location.assign(
-        "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
-      );
+    // If code exists, process it automatically
+    if (codeParam) {
+      processGithubCode(codeParam);
     }
-    if (codeParam === null) {
-      return;
-    }
+  }, []);
 
+  const processGithubCode = async (code: string) => {
+    setLoading(true);
     try {
-      const response = await accessGithub({ code: codeParam });
+      const response = await accessGithub({ code });
 
       if (response.status === true) {
-        console.log("trueee");
         router.push("/home");
       } else {
-        router.push("false");
-
+        router.push("/auth/failed");
         setToastValue(response);
         setToastVisible(true);
       }
     } catch (error) {
-      router.push("errorerror");
-      console.log(error);
+      router.push("/auth/error");
+      console.log("GitHub authentication error:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  
+  const getGithubCode = async () => {
+    window.location.assign(
+      "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
+    );
+  };
 
   /** ================== function end ================== */
 
