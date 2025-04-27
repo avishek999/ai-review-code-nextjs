@@ -36,6 +36,8 @@ const Home: React.FC = () => {
     chat: [],
   });
 
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
   const { updateMutation, createMutation, usePrefetchByUserId } =
     useDoctorPrescriptionQuery();
 
@@ -80,6 +82,8 @@ const Home: React.FC = () => {
       } else {
         response = await updateMutation.mutateAsync(payload);
       }
+      // setSelectedId(response.data._id);
+      // setCodeAfterReview(response.data);
 
       if (response !== undefined) {
         setCodeAfterReview(response as ICodeReview);
@@ -103,6 +107,8 @@ const Home: React.FC = () => {
           <SideBar
             getAllCodeByUSerId={getAllCodeByUSerId.data || []}
             setCodeAfterReview={setCodeAfterReview}
+            setSelectedId={setSelectedId}
+            selectedId={selectedId ?? ""}
           />
         </div>
 

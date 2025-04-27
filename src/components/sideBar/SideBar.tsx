@@ -2,22 +2,24 @@
 
 import { ICodeReview } from "@/interface/code";
 import { getAllCodeReviewById } from "@/services/api";
-import React, { useState } from "react";
+import React from "react";
 import { FaRegFileCode } from "react-icons/fa6";
 import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
 
 interface ISideBar {
   getAllCodeByUSerId: ICodeReview[];
   setCodeAfterReview: (arg0: ICodeReview) => void;
+  setSelectedId: (arg0:string) => void;
+  selectedId:string
 }
 
 const SideBar: React.FC<ISideBar> = ({
   getAllCodeByUSerId,
   setCodeAfterReview,
+  setSelectedId,
+  selectedId
 }) => {
-  const [selectedId, setSelectedId] = useState<string | null>(
-    null
-  );
+ 
   // (getAllCodeByUSerId?.at(-1)?._id as string) ||
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
