@@ -9,17 +9,16 @@ import { CustomScrollbar } from "../customScrollbar/CustomScrollbar";
 interface ISideBar {
   getAllCodeByUSerId: ICodeReview[];
   setCodeAfterReview: (arg0: ICodeReview) => void;
-  setSelectedId: (arg0:string) => void;
-  selectedId:string
+  setSelectedId: (arg0: string) => void;
+  selectedId: string;
 }
 
 const SideBar: React.FC<ISideBar> = ({
   getAllCodeByUSerId,
   setCodeAfterReview,
   setSelectedId,
-  selectedId
+  selectedId,
 }) => {
- 
   // (getAllCodeByUSerId?.at(-1)?._id as string) ||
   const getReviewedCodeById = async (_id: string) => {
     setSelectedId(_id);
@@ -30,6 +29,7 @@ const SideBar: React.FC<ISideBar> = ({
   };
 
   const handleNewFile = () => {
+    setSelectedId("");
     setCodeAfterReview({
       userId: "",
       filename: "",
