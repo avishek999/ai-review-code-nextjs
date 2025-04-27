@@ -71,7 +71,7 @@ const SideBar: React.FC<ISideBar> = ({
            flex gap-3 items-center text-gray-200`}
           >
             <FaRegFileCode />
-            sample.js
+            newFile.js
           </div>
         ) : (
           getAllCodeByUSerId

@@ -74,9 +74,8 @@ const Home: React.FC = () => {
       message: message,
     };
 
+    let response: { data?: iResponse[] } = {};
     try {
-      let response = {};
-
       if (!payload._id) {
         response = await createMutation.mutateAsync(payload);
       } else {
@@ -92,6 +91,12 @@ const Home: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      const responseData = response.data as ICodeReview;
+
+      setSelectedId(responseData._id ?? null);
+
+      setCodeAfterReview(responseData as ICodeReview);
     }
   };
 
