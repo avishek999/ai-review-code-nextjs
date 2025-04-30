@@ -14,6 +14,7 @@ import { BiSolidError } from "react-icons/bi";
 import Card1 from "@/components/cards/Card1";
 import Cta from "@/components/cta/Cta";
 import Image from "next/image";
+import Featuring from "./featuring/Featuring";
 
 const LandingPage: React.FC = () => {
   /** ================== references ================== */
@@ -196,6 +197,10 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* featuring section starts */}
+
+      <Featuring />
       {/* Cta section starts */}
 
       <Cta />
