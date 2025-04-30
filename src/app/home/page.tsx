@@ -12,6 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
 import Loader from "@/components/loader/Loader";
 import EditorSpinnerLoaderd from "@/components/loader/EditorSpinnerLoaderd";
+import ProtectedRoute from "@/protectedRoutes/ProtectedRoute";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -106,45 +107,47 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex h-[calc(100%-76.8px)] flex-col md:flex-row">
-        <div className="w-[20%] hidden md:block    ">
-          <SideBar
-            getAllCodeByUSerId={getAllCodeByUSerId.data || []}
-            setCodeAfterReview={setCodeAfterReview}
-            setSelectedId={setSelectedId}
-            selectedId={selectedId ?? ""}
-          />
-        </div>
+      <ProtectedRoute>
+        <HomeNavBar handlePrintCode={handlePrintCode} />
+        <div className="flex h-[calc(100%-76.8px)] flex-col md:flex-row">
+          <div className="w-[20%] hidden md:block    ">
+            <SideBar
+              getAllCodeByUSerId={getAllCodeByUSerId.data || []}
+              setCodeAfterReview={setCodeAfterReview}
+              setSelectedId={setSelectedId}
+              selectedId={selectedId ?? ""}
+            />
+          </div>
 
-        <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
-          <div className=" h-full">
-            {createMutation.isPending || updateMutation.isPending ? (
-              <EditorSpinnerLoaderd />
-            ) : (
-              <Editor
-                height="100%"
-                defaultLanguage="javascript"
-                defaultValue={getCodeAfterReview?.improvedCode}
-                value={getCodeAfterReview?.improvedCode}
-                theme="customTheme"
-                onChange={(value) => setCode(value || "")}
-                options={{
-                  minimap: { enabled: false },
-                  readOnly: false,
-                }}
-              />
-            )}
+          <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
+            <div className=" h-full">
+              {createMutation.isPending || updateMutation.isPending ? (
+                <EditorSpinnerLoaderd />
+              ) : (
+                <Editor
+                  height="100%"
+                  defaultLanguage="javascript"
+                  defaultValue={getCodeAfterReview?.improvedCode}
+                  value={getCodeAfterReview?.improvedCode}
+                  theme="customTheme"
+                  onChange={(value) => setCode(value || "")}
+                  options={{
+                    minimap: { enabled: false },
+                    readOnly: false,
+                  }}
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="w-[25%] h-full  hidden md:block   ">
+            <ChatScreen
+              setMessage={setMessage}
+              getCodeAfterReview={getCodeAfterReview}
+            />
           </div>
         </div>
-
-        <div className="w-[25%] h-full  hidden md:block   ">
-          <ChatScreen
-            setMessage={setMessage}
-            getCodeAfterReview={getCodeAfterReview}
-          />
-        </div>
-      </div>
+      </ProtectedRoute>
     </>
   );
 };

@@ -14,7 +14,7 @@ const PrimaryButton: React.FC<IPrimaryButton> = ({
 }) => {
   return (
     <Link
-      href={{ href }}
+      href={href}
       className={` ${className} px-4 py-2 rounded font-semibold bg-[var(--primary-color)]`}
     >
       {title}

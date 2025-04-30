@@ -50,7 +50,7 @@ const Featuring: React.FC = () => {
       </div>
 
       <div className="w-full mt:mt-0 mt-4 ">
-        <div className="w-full flex md:flex-row flex-col justify-center md:gap-3 gap-11 md:px-28 ">
+        <div className="w-full flex md:flex-row flex-col-reverse justify-center md:gap-3 gap-11 md:px-28 ">
           <div
             className="md:w-[60%]  mx-3 nd:mx-0 rounded-md relative flex items-center justify-center"
             style={{

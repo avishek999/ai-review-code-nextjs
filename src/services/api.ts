@@ -21,7 +21,7 @@ export const registerViaEmail = (
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -43,7 +43,7 @@ export const loginViaEmail = (payload: Partial<IUser>): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -64,7 +64,29 @@ export const logoutUserAPi = (): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
+      return res;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
+
+export const isAuth = (): Promise<iResponse> => {
+  return fetch(`${SERVER_URL}/api/auth/is-auth`, {
+    method: "POST",
+    headers: {
+      "content-Type": "application/json",
+    },
+    credentials: "include",
+  })
+    .then(async (response) => {
+      const res = await response.json();
+      if (response.status >= 400) {
+        return Promise.reject(res);
+      }
+      console.log(res);
+
       return res;
     })
     .catch((err) => {
@@ -86,7 +108,7 @@ export const sendVerifyOtp = (): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -108,7 +130,7 @@ export const verifyOtp = (verifyOtp: Partial<IUser>): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -130,7 +152,7 @@ export const sendResetOtp = (email: Partial<IUser>): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -154,7 +176,7 @@ export const resetPassword = (
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -177,7 +199,7 @@ export const accessGithub = (code: { code: string }): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -205,7 +227,7 @@ export const sendCodeForReview = (
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -227,7 +249,7 @@ export const getAllCodesReviewBUserId = (): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -250,7 +272,7 @@ export const getAllCodeReviewById = (_id: {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
@@ -274,7 +296,7 @@ export const updateCodeForReview = (
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log("response", res.token);
+
       return res;
     })
     .catch((err) => {
