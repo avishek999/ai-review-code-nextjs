@@ -18,32 +18,21 @@ import Image from "next/image";
 const LandingPage: React.FC = () => {
   /** ================== references ================== */
 
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   /** ================== useEffect start ================== */
 
   useEffect(() => {
     // Animate heading
-    gsap.from(titleRef.current, {
-      opacity: 0,
-      y: -60,
-      color: "#7c3aed",
-      duration: 2,
-      ease: "power2.out",
-    });
 
     gsap.from(containerRef.current, {
       opacity: 0,
       scale: 0.9,
 
+      color: "#7c3aed",
       duration: 3,
       ease: "power2.out",
     });
-
-    setTimeout(() => {
-      return <div>loading..</div>;
-    }, 2000);
   }, []);
 
   const monaco = useMonaco();
@@ -79,10 +68,7 @@ const LandingPage: React.FC = () => {
         // bg-[url('/Images/home-page/models.svg')] bg-no-repeat bg-start
         className="w-full h-[70vh]  flex justify-center flex-col items-center "
       >
-        <h1
-          ref={titleRef}
-          className="lg:text-6xl text-4xl font-bold text-center flex  items-end"
-        >
+        <h1 className="lg:text-6xl text-4xl font-bold text-center flex  items-end">
           AI-Powered Code Reviews for <br /> Modern Development
         </h1>
         <p className="text-[var(--secondary-text-color)] mt-4 text-center text-sm md:text-md">
@@ -131,6 +117,9 @@ const LandingPage: React.FC = () => {
             <div className="p-[3px] md:p-[6px] rounded-full bg-red-500"></div>
             <div className="p-[3px] md:p-[6px] rounded-full bg-yellow-500"></div>
             <div className="p-[3px] md:p-[6px] rounded-full bg-green-500"></div>
+          </div>
+          <div className="flex justify-center ">
+            <div className="h-[100px] w-[70%] bg-[#7c3aed] rounded-full blur-3xl absolute z-[-1] animate-pulse"></div>
           </div>
           <Image
             width={1200}
