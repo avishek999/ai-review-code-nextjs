@@ -106,7 +106,7 @@ const Signin: React.FC = () => {
           setToastVisible(true);
           setToastValue(response);
 
-          console.log(response.status);
+        
         }
       } catch (error) {
         console.log(error);
@@ -135,7 +135,7 @@ const Signin: React.FC = () => {
       } finally {
         setLoading(false);
       }
-      console.log(data);
+      
       return;
     }
     if (authMode === AuthModeEnum.ForgetPassword) {
@@ -168,7 +168,7 @@ const Signin: React.FC = () => {
         setIsOtpSuccess(true);
         sendVerifyOtp();
       } else {
-        console.log(response.status);
+    
         setLoading(false);
         setToastValue(response);
         setToastVisible(true);

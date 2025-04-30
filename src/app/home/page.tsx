@@ -52,7 +52,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (monaco) {
-      console.log("monaco", monaco);
+     
       monaco.editor.defineTheme("customTheme", {
         base: "vs-dark",
         inherit: true,

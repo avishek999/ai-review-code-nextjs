@@ -33,13 +33,13 @@ const OtpVerification: React.FC<IOtpVerification> = ({
 
     const response = await verifyOtp(payload);
 
-    console.log(response.status);
+
 
     try {
       if (response.status === true) {
         router.push("/home");
       } else {
-        console.log(response.status);
+      
         setToastValue(response);
         setToastVisible(true);
       }
