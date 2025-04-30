@@ -85,8 +85,6 @@ export const isAuth = (): Promise<iResponse> => {
       if (response.status >= 400) {
         return Promise.reject(res);
       }
-      console.log(res);
-
       return res;
     })
     .catch((err) => {
