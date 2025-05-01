@@ -19,10 +19,9 @@ const AuthContext = createContext<ContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     isAuth()
       .then((res) => {
         if (res.status) {
@@ -35,6 +34,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setLoading(false);
       });
   }, []);
+
+
 
   return (
     <AuthContext.Provider

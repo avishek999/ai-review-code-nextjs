@@ -25,6 +25,7 @@ import {
 import { IUser } from "@/interface/user";
 import { iResponse } from "@/interface/common";
 import UnProtectedRoute from "@/protectedRoutes/UnProtectedRoute";
+import { useAuthContext } from "@/context/AuthContext";
 
 enum AuthModeEnum {
   SignIn = "signin",
@@ -45,6 +46,7 @@ const Signin: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const { isAuthenticated, isLoading, setIsAuthenticated } = useAuthContext();
   /** ================== useState end ================== */
 
   /** ==================  hooks start ================== */
@@ -84,18 +86,15 @@ const Signin: React.FC = () => {
   const onAuthSubmit = async (data: IUser) => {
     setLoading(true);
 
-    /// ? note:  don't use data change it
-
     if (authMode === AuthModeEnum.SignIn) {
       delete data.name;
       try {
         const response = await loginViaEmail(data);
 
-        if (response.status === true) {
-          if (response.isAccountVerified === true) {
-            setTimeout(() => {
-              router.push("/home");
-            }, 1500);
+        setIsAuthenticated(true);
+        if (response.status && isAuthenticated) {
+          if (response.isAccountVerified) {
+            router.push("/home");
 
             setToastVisible(true);
           } else {
@@ -105,8 +104,6 @@ const Signin: React.FC = () => {
         } else {
           setToastVisible(true);
           setToastValue(response);
-
-        
         }
       } catch (error) {
         console.log(error);
@@ -117,14 +114,14 @@ const Signin: React.FC = () => {
       return;
     }
 
-    if (iForgetPasswordMailSent === true) {
+    if (iForgetPasswordMailSent) {
       delete data.name;
       delete data.password;
 
       try {
         const response = await resetPassword(data);
-
-        if (response.status === true) {
+        setIsAuthenticated(true);
+        if (response.status) {
           router.push("/home");
         } else {
           setToastValue(response);
@@ -135,7 +132,7 @@ const Signin: React.FC = () => {
       } finally {
         setLoading(false);
       }
-      
+
       return;
     }
     if (authMode === AuthModeEnum.ForgetPassword) {
@@ -163,12 +160,11 @@ const Signin: React.FC = () => {
     const response = await registerViaEmail(data);
 
     try {
-      if (response.status === true) {
+      if (response.status) {
         setLoading(false);
         setIsOtpSuccess(true);
         sendVerifyOtp();
       } else {
-    
         setLoading(false);
         setToastValue(response);
         setToastVisible(true);
@@ -183,7 +179,7 @@ const Signin: React.FC = () => {
     try {
       const response = await accessGithub({ code });
 
-      if (response.status === true) {
+      if (response.status && isAuthenticated) {
         router.push("/home");
       } else {
         router.push("/auth/failed");
@@ -223,12 +219,12 @@ const Signin: React.FC = () => {
 
         <div
           className={`relative  p-6 bg-[var(--secondary-background-color)] rounded-md mt-5 max-w-sm w-full  flex overflow-hidden  ${
-            loading ? "opacity-75" : ""
+            loading && isLoading ? "opacity-75" : ""
           } `}
         >
           <div
             className={`absolute w-[30px] h-[5px] rounded-2xl top-0 left-0 bg-[var(--primary-color)] animate-loading  ${
-              loading ? "block" : "hidden"
+              loading && isLoading ? "block" : "hidden"
             }  `}
           ></div>
 
