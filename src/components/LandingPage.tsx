@@ -16,8 +16,11 @@ import Cta from "@/components/cta/Cta";
 import Image from "next/image";
 import Featuring from "./featuring/Featuring";
 import { isAuth } from "@/services/api";
+import Link from "next/link";
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
+  isAuthenticated,
+}) => {
   /** ================== references ================== */
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +29,6 @@ const LandingPage: React.FC = () => {
 
   useEffect(() => {
     // Animate heading
-
     gsap.from(containerRef.current, {
       opacity: 0,
       scale: 0.9,
@@ -86,13 +88,14 @@ const LandingPage: React.FC = () => {
 
           <div className="relative inline-flex items-center justify-center gap-4 group mt-2">
             <div className="absolute inset-0 duration-1000 opacity-60 transitiona-all bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 rounded-xl blur-lg filter group-hover:opacity-100 group-hover:duration-200"></div>
-            <a
+            <Link
               role="button"
               className="group relative inline-flex items-center justify-center text-base rounded-xl bg-gray-900 px-8 py-3 font-semibold text-white transition-all duration-200 hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 hover:shadow-gray-600/30"
               title="payment"
-              href="#"
+              href={isAuthenticated ? "/home " : "/signin"}
             >
-              Get Started For Free
+              {isAuthenticated ? "Go To Dashboard" : "  Get Started For Free"}
+
               <svg
                 aria-hidden="true"
                 viewBox="0 0 10 10"
@@ -110,7 +113,7 @@ const LandingPage: React.FC = () => {
                   className="transition group-hover:translate-x-[3px]"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -10,7 +10,8 @@ import {
 } from "@/services/api";
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 
-export const useDoctorPrescriptionQuery = () => {
+
+export const useCodeReviewQuery = () => {
   const createMutation = useMutation({
     mutationFn: sendCodeForReview,
     onSuccess: async () => {

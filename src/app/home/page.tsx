@@ -6,7 +6,7 @@ import SideBar from "@/components/sideBar/SideBar";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import HomeNavBar from "@/components/navbar/HomeNavBar";
 import { ICodeReview } from "@/interface/code";
-import { useDoctorPrescriptionQuery } from "@/hooks/useReactQuery";
+import { useCodeReviewQuery } from "@/hooks/useReactQuery";
 import { iResponse } from "@/interface/common";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { updateMutation, createMutation, usePrefetchByUserId } =
-    useDoctorPrescriptionQuery();
+    useCodeReviewQuery();
 
   const { data, isLoading } = usePrefetchByUserId();
 
@@ -52,7 +52,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (monaco) {
-     
       monaco.editor.defineTheme("customTheme", {
         base: "vs-dark",
         inherit: true,
