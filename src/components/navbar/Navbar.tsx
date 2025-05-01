@@ -24,7 +24,7 @@ const Navbar: React.FC<{ isAuthenticated: boolean }> = ({
         {isAuthenticated ? (
           <PrimaryButton title="Dashboard" href="/home" />
         ) : (
-          <PrimaryButton title="Get started" href="/signup" />
+          <PrimaryButton title="Get started" href="/signin" />
         )}
       </div>
       <MdOutlineMenu size={28} className="md:hidden" />

@@ -384,22 +384,22 @@ const Signin: React.FC = () => {
           </div>
         </div>
         {!isOtpSuccess && (
-          <div className="text-center text-[14px] mt-2">
+          <div className="text-center text-[14px] mt-2 flex gap-2">
             Already have an account?
             {authMode === AuthModeEnum.SignUp ? (
-              <span
+              <div
                 onClick={() => setAuthMode(AuthModeEnum.SignIn)}
                 className="text-[var(--primary-color)] cursor-pointer"
               >
                 Sign in
-              </span>
+              </div>
             ) : (
-              <span
+              <div
                 onClick={() => setAuthMode(AuthModeEnum.SignUp)}
                 className="text-[var(--primary-color)] cursor-pointer"
               >
                 Sign up
-              </span>
+              </div>
             )}
           </div>
         )}
