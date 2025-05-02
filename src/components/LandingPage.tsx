@@ -1,6 +1,6 @@
 "use client";
 /** core libraries & installed libraries */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Editor, useMonaco } from "@monaco-editor/react";
 
@@ -20,23 +20,40 @@ import Link from "next/link";
 const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
   isAuthenticated,
 }) => {
+  const [animationComplete, setAnimationComplete] = useState(false);
   /** ================== references ================== */
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   /** ================== useEffect start ================== */
 
-  useEffect(() => {
-    // Animate heading
-    gsap.from(containerRef.current, {
-      opacity: 0,
-      scale: 0.9,
+   useEffect(() => {
+    // Clean up any previous animations
+    gsap.killTweensOf(containerRef.current);
+    
+    // Only animate if animation hasn't been completed
+    if (!animationComplete && containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, scale: 0.9, color: "#7c3aed" },
+        {
+          opacity: 1,
+          scale: 1,
+          color: "currentColor", // Return to the default text color
+          duration: 3,
+          ease: "power2.out",
+          onComplete: () => setAnimationComplete(true),
+        }
+      );
+    }
 
-      color: "#7c3aed",
-      duration: 3,
-      ease: "power2.out",
-    });
-  }, []);
+    console.log("Animation setup running");
+    
+    // Cleanup function
+    return () => {
+      gsap.killTweensOf(containerRef.current);
+    };
+  }, [animationComplete]);
 
   const monaco = useMonaco();
 

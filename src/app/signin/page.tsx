@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+
 /** icons */
 import { FaCode, FaGithub } from "react-icons/fa6";
 
@@ -179,7 +180,8 @@ const Signin: React.FC = () => {
     try {
       const response = await accessGithub({ code });
 
-      if (response.status && isAuthenticated) {
+      if (response.status) {
+        setIsAuthenticated(true);
         router.push("/home");
       } else {
         router.push("/auth/failed");
@@ -204,12 +206,15 @@ const Signin: React.FC = () => {
 
   return (
     <UnProtectedRoute>
-      <div className="min-h-screen flex flex-col justify-center items-center p-4">
+      <div className=" flex flex-col justify-center items-center p-4 h-full">
         {isToastVisible && toastValue && <Toast toastValue={toastValue} />}
 
-        <div className="text-xl md:text-3xl flex flex-col items-center gap-5 font-bold">
+        <div
+          className="text-2xl md:text-3xl flex flex-col items-center gap-5 font-bold"
+          onClick={() => router.push("/")}
+        >
           <FaCode size={45} className=" text-[var(--icon-color)]" />
-          <div className="text-center">
+          <div className="text-center text-3xl">
             CodeReviewAI
             <div className="text-sm font-normal text-[var(--secondary-text-color)]">
               Your intelligent review assistant

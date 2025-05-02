@@ -54,9 +54,9 @@ const Featuring: React.FC = () => {
       </div>
 
       <div className="w-full mt:mt-0 mt-4 ">
-        <div className="w-full flex md:flex-row flex-col-reverse justify-center md:gap-3 gap-11 md:px-28 ">
+        <div className="w-full flex md:flex-row flex-col-reverse justify-center md:gap-3 gap-11 lg:px-28 ">
           <div
-            className="md:w-[60%]  mx-3 nd:mx-0 rounded-md relative flex items-center justify-center"
+            className="lg:w-[60%] mx-3 nd:mx-0 rounded-md relative flex items-center justify-center"
             style={{
               background:
                 "linear-gradient(188deg,rgba(79, 70, 229, 0) 20%, rgba(125, 47, 235, 1) 180%)",
@@ -79,7 +79,7 @@ const Featuring: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-[26%] py-5  lg:pb-5 mx-3 nd:mx-0 rounded-md border border-gray-700 flex justify-center items-center md:items-start flex-col md:pl-10 md:pb-10">
+          <div className="lg:w-[26%] py-5  lg:pb-5 mx-3 nd:mx-0 rounded-md border border-gray-700 flex justify-center items-center md:items-start flex-col md:pl-10 md:pb-10">
             <Image
               width={200}
               height={80}
