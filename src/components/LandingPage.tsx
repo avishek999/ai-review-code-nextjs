@@ -1,6 +1,6 @@
 "use client";
 /** core libraries & installed libraries */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Editor, useMonaco } from "@monaco-editor/react";
 
@@ -9,33 +9,51 @@ import { FaBug, FaCode, FaRobot } from "react-icons/fa6";
 import { BiSolidError } from "react-icons/bi";
 
 /** user defined component */
-// import PrimaryButton from "@/components/buttons/PrimaryButton";
-// import SecondaryButton from "@/components/buttons/SecondaryButton";
+
 import Card1 from "@/components/cards/Card1";
 import Cta from "@/components/cta/Cta";
 import Image from "next/image";
 import Featuring from "./featuring/Featuring";
 import { isAuth } from "@/services/api";
+import Link from "next/link";
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
+  isAuthenticated,
+}) => {
+  const [animationComplete, setAnimationComplete] = useState(false);
   /** ================== references ================== */
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   /** ================== useEffect start ================== */
 
-  useEffect(() => {
-    // Animate heading
+   useEffect(() => {
+    // Clean up any previous animations
+    gsap.killTweensOf(containerRef.current);
+    
+    // Only animate if animation hasn't been completed
+    if (!animationComplete && containerRef.current) {
+      gsap.fromTo(
+        containerRef.current,
+        { opacity: 0, scale: 0.9, color: "#7c3aed" },
+        {
+          opacity: 1,
+          scale: 1,
+          color: "currentColor", // Return to the default text color
+          duration: 3,
+          ease: "power2.out",
+          onComplete: () => setAnimationComplete(true),
+        }
+      );
+    }
 
-    gsap.from(containerRef.current, {
-      opacity: 0,
-      scale: 0.9,
-
-      color: "#7c3aed",
-      duration: 3,
-      ease: "power2.out",
-    });
-  }, []);
+    console.log("Animation setup running");
+    
+    // Cleanup function
+    return () => {
+      gsap.killTweensOf(containerRef.current);
+    };
+  }, [animationComplete]);
 
   const monaco = useMonaco();
 
@@ -86,13 +104,14 @@ const LandingPage: React.FC = () => {
 
           <div className="relative inline-flex items-center justify-center gap-4 group mt-2">
             <div className="absolute inset-0 duration-1000 opacity-60 transitiona-all bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-400 rounded-xl blur-lg filter group-hover:opacity-100 group-hover:duration-200"></div>
-            <a
+            <Link
               role="button"
               className="group relative inline-flex items-center justify-center text-base rounded-xl bg-gray-900 px-8 py-3 font-semibold text-white transition-all duration-200 hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 hover:shadow-gray-600/30"
               title="payment"
-              href="#"
+              href={isAuthenticated ? "/home " : "/signin"}
             >
-              Get Started For Free
+              {isAuthenticated ? "Go To Dashboard" : "  Get Started For Free"}
+
               <svg
                 aria-hidden="true"
                 viewBox="0 0 10 10"
@@ -110,7 +129,7 @@ const LandingPage: React.FC = () => {
                   className="transition group-hover:translate-x-[3px]"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

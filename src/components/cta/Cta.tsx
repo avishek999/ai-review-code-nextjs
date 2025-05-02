@@ -1,7 +1,9 @@
 import React from "react";
 import PrimaryButton from "../buttons/PrimaryButton";
+import { useAuthContext } from "@/context/AuthContext";
 
 const Cta: React.FC = () => {
+  const { isAuthenticated } = useAuthContext();
   return (
     <div className="flex items-center justify-center   py-7">
       <div
@@ -18,7 +20,12 @@ const Cta: React.FC = () => {
           Join thousand of developer who trust CodeReview AI for there code
           quality <br /> needs
         </p>
-        <PrimaryButton title="Get Started for free" href="/signup" />
+
+        {isAuthenticated ? (
+          <PrimaryButton title="Go To Dashboard" href="/home" />
+        ) : (
+          <PrimaryButton title="Get started" href="/signup" />
+        )}
       </div>
     </div>
   );
