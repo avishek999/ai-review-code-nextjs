@@ -122,7 +122,7 @@ const Signin: React.FC = () => {
       try {
         const response = await resetPassword(data);
         setIsAuthenticated(true);
-        if (response.status) {
+        if (response.status === true) {
           router.push("/home");
         } else {
           setToastValue(response);
@@ -161,7 +161,7 @@ const Signin: React.FC = () => {
     const response = await registerViaEmail(data);
 
     try {
-      if (response.status) {
+      if (response.status === true) {
         setLoading(false);
         setIsOtpSuccess(true);
         sendVerifyOtp();
@@ -180,7 +180,7 @@ const Signin: React.FC = () => {
     try {
       const response = await accessGithub({ code });
 
-      if (response.status) {
+      if (response.status === true) {
         setIsAuthenticated(true);
         router.push("/home");
       } else {
