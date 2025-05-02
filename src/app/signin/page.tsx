@@ -92,10 +92,15 @@ const Signin: React.FC = () => {
       try {
         const response = await loginViaEmail(data);
 
-        setIsAuthenticated(true);
-        if (response.status === true && isAuthenticated) {
+        if (response.status === true) {
           if (response.isAccountVerified) {
-            router.push("/home");
+            console.log("is", isAuthenticated);
+            setIsAuthenticated(true);
+            if (isAuthenticated) {
+              console.log("iss", isAuthenticated);
+
+              router.push("/home");
+            }
 
             setToastVisible(true);
           } else {
@@ -121,8 +126,9 @@ const Signin: React.FC = () => {
 
       try {
         const response = await resetPassword(data);
-        setIsAuthenticated(true);
         if (response.status === true) {
+          setIsAuthenticated(true);
+
           router.push("/home");
         } else {
           setToastValue(response);
