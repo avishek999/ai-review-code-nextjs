@@ -93,7 +93,7 @@ const Signin: React.FC = () => {
         const response = await loginViaEmail(data);
 
         setIsAuthenticated(true);
-        if (response.status && isAuthenticated) {
+        if (response.status === true && isAuthenticated) {
           if (response.isAccountVerified) {
             router.push("/home");
 
