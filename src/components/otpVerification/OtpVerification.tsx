@@ -1,5 +1,5 @@
 import { verifyOtp } from "@/services/api";
-import React from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { iResponse } from "@/interface/common";
@@ -22,11 +22,13 @@ const OtpVerification: React.FC<IOtpVerification> = ({
   setToastValue,
   setToastVisible,
 }) => {
+  const inputRefs = useRef<HTMLInputElement[]>([]);
+
   const { register, handleSubmit } = useForm<OTPFormData>();
   const router = useRouter();
 
   const { revalidateAuth } = useAuthContext();
-
+  
   const onSubmit = async (data: OTPFormData) => {
     const otp = Object.values(data).join("");
     const payload = {
@@ -54,10 +56,9 @@ const OtpVerification: React.FC<IOtpVerification> = ({
   return (
     <div className="max-w-md mx-auto text-center px-4 sm:px-8 py-10 rounded-xl shadow ">
       <header className="mb-8">
-        <h1 className="text-2xl font-bold mb-1">Mobile Phone Verification</h1>
+        <h1 className="text-2xl font-bold mb-1">Email Verification</h1>
         <p className="text-[15px] text-slate-500">
-          Enter the 4-digit verification code that was sent to your phone
-          number.
+          Enter the 4-digit verification code that was sent to your Email
         </p>
       </header>
       <form id="otp-form" onSubmit={handleSubmit(onSubmit)}>
@@ -66,9 +67,27 @@ const OtpVerification: React.FC<IOtpVerification> = ({
             <input
               key={index}
               type="text"
-              className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 "
+              className="w-14 h-14 text-center text-2xl font-extrabold text-slate-900 bg-slate-100 border border-transparent hover:border-slate-200 appearance-none rounded p-4 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
               maxLength={1}
               {...register(`otp${index + 1}` as keyof OTPFormData)}
+              ref={(el) => {
+                inputRefs.current[index] = el!;
+              }}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value && index < 3) {
+                  inputRefs.current[index + 1]?.focus();
+                }
+              }}
+              onKeyDown={(e) => {
+                if (
+                  e.key === "Backspace" &&
+                  !e.currentTarget.value &&
+                  index > 0
+                ) {
+                  inputRefs.current[index - 1]?.focus();
+                }
+              }}
             />
           ))}
         </div>
