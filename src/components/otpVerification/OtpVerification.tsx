@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { iResponse } from "@/interface/common";
+import { useAuthContext } from "@/context/AuthContext";
 interface OTPFormData {
   otp1: string;
   otp2: string;
@@ -24,6 +25,8 @@ const OtpVerification: React.FC<IOtpVerification> = ({
   const { register, handleSubmit } = useForm<OTPFormData>();
   const router = useRouter();
 
+  const { revalidateAuth } = useAuthContext();
+
   const onSubmit = async (data: OTPFormData) => {
     const otp = Object.values(data).join("");
     const payload = {
@@ -33,13 +36,11 @@ const OtpVerification: React.FC<IOtpVerification> = ({
 
     const response = await verifyOtp(payload);
 
-
-
     try {
       if (response.status === true) {
+        revalidateAuth();
         router.push("/home");
       } else {
-      
         setToastValue(response);
         setToastVisible(true);
       }

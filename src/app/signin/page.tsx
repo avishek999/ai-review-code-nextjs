@@ -47,7 +47,8 @@ const Signin: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { isAuthenticated, isLoading, setIsAuthenticated } = useAuthContext();
+  const { isAuthenticated, isLoading, setIsAuthenticated, revalidateAuth } =
+    useAuthContext();
   /** ================== useState end ================== */
 
   /** ==================  hooks start ================== */
@@ -95,7 +96,7 @@ const Signin: React.FC = () => {
         if (response.status === true) {
           if (response.isAccountVerified) {
             console.log("is", isAuthenticated);
-            setIsAuthenticated(true);
+            revalidateAuth();
             if (isAuthenticated) {
               console.log("iss", isAuthenticated);
 

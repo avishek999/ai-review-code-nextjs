@@ -17,9 +17,10 @@ import Featuring from "./featuring/Featuring";
 import { isAuth } from "@/services/api";
 import Link from "next/link";
 
-const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
-  isAuthenticated,
-}) => {
+const LandingPage: React.FC<{
+  isAuthenticated: boolean;
+  revalidateAuth: () => void;
+}> = ({ isAuthenticated, revalidateAuth }) => {
   const [animationComplete, setAnimationComplete] = useState(false);
   /** ================== references ================== */
 
@@ -27,10 +28,14 @@ const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
 
   /** ================== useEffect start ================== */
 
-   useEffect(() => {
+  useEffect(() => {
+    revalidateAuth();
+  }, [revalidateAuth]);
+
+  useEffect(() => {
     // Clean up any previous animations
     gsap.killTweensOf(containerRef.current);
-    
+
     // Only animate if animation hasn't been completed
     if (!animationComplete && containerRef.current) {
       gsap.fromTo(
@@ -48,7 +53,7 @@ const LandingPage: React.FC<{ isAuthenticated: boolean }> = ({
     }
 
     console.log("Animation setup running");
-    
+
     // Cleanup function
     return () => {
       gsap.killTweensOf(containerRef.current);

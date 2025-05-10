@@ -31,9 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthContext>
-          <TanstackProvider>{children}</TanstackProvider>
-        </AuthContext>
+        <TanstackProvider>
+          <AuthContext>{children}</AuthContext>
+        </TanstackProvider>
       </body>
     </html>
   );
