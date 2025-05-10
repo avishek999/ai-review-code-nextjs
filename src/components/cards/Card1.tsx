@@ -42,7 +42,7 @@ const Card1: React.FC<Icards> = ({ title, description, Icon }) => {
   return (
     <div
       ref={containerRef}
-      className="space-y-3  h-full bg-[var(--secondary-background-color)] rounded-xl p-6 md:w-[27%] md:mx-0 mx-3"
+      className="space-y-3  h-full bg-[var(--secondary-background-color)] rounded-xl p-6 md:w-[30%] xl:w-[27%] md:mx-0 mx-3"
     >
       <div className="p-3 bg-[var(--accent-color2)] text-[var(--icon-color)] w-fit rounded">
         <Icon size={24} />

@@ -1,15 +1,18 @@
 import { ProviderQueryClient } from "@/components/providers/TanstackProvider";
-import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
+import {
+  QUERY_Auth_KEY,
+  QUERY_REVIEWED_CODE_KEY,
+} from "@/constants/query.constant";
 
 import { iResponse } from "@/interface/common";
 import {
   getAllCodeReviewById,
   getAllCodesReviewBUserId,
+  isAuth,
   sendCodeForReview,
   updateCodeForReview,
 } from "@/services/api";
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
-
 
 export const useCodeReviewQuery = () => {
   const createMutation = useMutation({
@@ -37,14 +40,14 @@ export const useCodeReviewQuery = () => {
     });
   };
 
-    const updateMutation = useMutation({
-      mutationFn: updateCodeForReview,
-      onSuccess: async () => {
-        await ProviderQueryClient.invalidateQueries({
-          queryKey: [QUERY_REVIEWED_CODE_KEY],
-        });
-      },
-    });
+  const updateMutation = useMutation({
+    mutationFn: updateCodeForReview,
+    onSuccess: async () => {
+      await ProviderQueryClient.invalidateQueries({
+        queryKey: [QUERY_REVIEWED_CODE_KEY],
+      });
+    },
+  });
 
   // -------------------------------------------  Prescription Config start -------------------------------------------
 
@@ -56,4 +59,14 @@ export const useCodeReviewQuery = () => {
     usePrefetchByUserId,
     updateMutation,
   };
+};
+
+export const useAuth = () => {
+  const query = useQuery({
+    queryFn: isAuth,
+    queryKey: [QUERY_Auth_KEY],
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return { query };
 };

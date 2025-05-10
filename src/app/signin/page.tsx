@@ -47,7 +47,8 @@ const Signin: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { isAuthenticated, isLoading, setIsAuthenticated } = useAuthContext();
+  const { isAuthenticated, isLoading, setIsAuthenticated, revalidateAuth } =
+    useAuthContext();
   /** ================== useState end ================== */
 
   /** ==================  hooks start ================== */
@@ -92,10 +93,15 @@ const Signin: React.FC = () => {
       try {
         const response = await loginViaEmail(data);
 
-        setIsAuthenticated(true);
-        if (response.status === true && isAuthenticated) {
+        if (response.status === true) {
           if (response.isAccountVerified) {
-            router.push("/home");
+            console.log("is", isAuthenticated);
+            revalidateAuth();
+            if (isAuthenticated) {
+              console.log("iss", isAuthenticated);
+
+              router.push("/home");
+            }
 
             setToastVisible(true);
           } else {
@@ -121,8 +127,9 @@ const Signin: React.FC = () => {
 
       try {
         const response = await resetPassword(data);
-        setIsAuthenticated(true);
         if (response.status === true) {
+          setIsAuthenticated(true);
+
           router.push("/home");
         } else {
           setToastValue(response);

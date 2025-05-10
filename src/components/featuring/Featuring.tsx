@@ -8,8 +8,8 @@ const Featuring: React.FC = () => {
         Boost Code Quality with Smart, Instant, and Scalable AI Reviews
       </div>
 
-      <div className="w-full mt:mt-0 mt-4">
-        <div className="w-full flex md:flex-row flex-col justify-center md:gap-3 gap-11 lg:px-28 ">
+      <div className="w-full mt:mt-0 md:mt-8 xl:mt-4">
+        <div className="w-full flex md:flex-row flex-col justify-center md:gap-3 gap-11 xl:px-28 ">
           <div className="lg:w-[26%]   py-5 lg:py-0 mx-3 nd:mx-0 rounded-md border border-gray-700 flex justify-center items-center md:items-start flex-col md:pl-10 md:pb-10">
             <Image
               width={250}
@@ -20,7 +20,7 @@ const Featuring: React.FC = () => {
             />
             <div className="text-center md:text-start">
               <div className="text-lg mt-4">Instantly Improve Your Code</div>
-              <div className="text-md text-gray-500 w-[33ch] mt-2">
+              <div className="text-md text-gray-500 lg:w-[20ch] xl:w-[33ch] mt-2">
                 AI reviews and refines your code as you write, boosting quality
                 instantly.
               </div>
@@ -40,11 +40,11 @@ const Featuring: React.FC = () => {
               alt=""
               className=" h-auto z-[-2] relative min-h-[350px]  object-contain"
             />
-            <div className="absolute bottom-5 md:bottom-10 left-5 md:left-10  ">
-              <div className="md:text-2xl text-xl">
+            <div className="absolute bottom-5 xl:bottom-10 left-5 xl:left-10  ">
+              <div className="xl:text-2xl text-lg">
                 Effortless Code Improvements
               </div>
-              <div className="md:text-sm text-gray-300 w-[40ch] md:w-[50ch]">
+              <div className="md:text-sm text-gray-300  xl:w-[40ch] md:w-[30ch]">
                 Smart suggestions tailored to your code style, making every
                 input cleaner and more efficient.
               </div>
@@ -54,7 +54,7 @@ const Featuring: React.FC = () => {
       </div>
 
       <div className="w-full mt:mt-0 mt-4 ">
-        <div className="w-full flex md:flex-row flex-col-reverse justify-center md:gap-3 gap-11 lg:px-28 ">
+        <div className="w-full flex md:flex-row flex-col-reverse justify-center md:gap-3 gap-11 xl:px-28 ">
           <div
             className="lg:w-[60%] mx-3 nd:mx-0 rounded-md relative flex items-center justify-center"
             style={{
@@ -70,10 +70,10 @@ const Featuring: React.FC = () => {
               className="  relative z-[-2] min-h-[350px]  object-contain"
             />
             <div className="absolute bottom-5 md:bottom-10 left-5 md:left-10  ">
-              <div className="md:text-2xl text-xl">
+              <div className="xl:text-2xl text-lg">
                 Smarter Code, Fewer Mistakes
               </div>
-              <div className="md:text-sm text-gray-300 w-[40ch] md:w-[50ch]">
+              <div className="md:text-sm text-gray-300  xl:w-[40ch] md:w-[30ch]">
                 Let AI review your code in real-time, catching issues early and
                 improving structure effortlessly.
               </div>
@@ -91,7 +91,7 @@ const Featuring: React.FC = () => {
               <div className="text-lg mt-4">
                 AI-Powered Code Review in Seconds
               </div>
-              <div className="text-md text-gray-500 w-[33ch] mt-2">
+              <div className="text-md text-gray-500 lg:w-[20ch] xl:w-[33ch] mt-2">
                 Get smart, automated code reviews with instant suggestions to
                 improve quality
               </div>
