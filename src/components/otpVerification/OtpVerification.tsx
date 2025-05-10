@@ -73,6 +73,8 @@ const OtpVerification: React.FC<IOtpVerification> = ({
               maxLength={1}
               {...register(`otp${index + 1}` as keyof OTPFormData)}
               ref={(el) => {
+                const name = `otp${index + 1}` as keyof OTPFormData; 
+                register(name).ref(el)
                 inputRefs.current[index] = el!;
               }}
               onChange={(e) => {

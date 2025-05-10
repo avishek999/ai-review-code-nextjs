@@ -67,7 +67,7 @@ const Signin: React.FC = () => {
     setTimeout(() => {
       setToastVisible(false);
     }, 2000);
-  }, []);
+  }, [toastValue]);
 
   useEffect(() => {
     // Check if there's a code in the URL
@@ -79,6 +79,15 @@ const Signin: React.FC = () => {
     if (codeParam) {
       processGithubCode(codeParam);
     }
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handleTab);
+    return () => document.removeEventListener("keydown", handleTab);
   }, []);
 
   /** ================== useEffect end ================== */
@@ -92,7 +101,7 @@ const Signin: React.FC = () => {
       delete data.name;
       try {
         const response = await loginViaEmail(data);
-
+        revalidateAuth();
         if (response.status === true) {
           if (response.isAccountVerified) {
             console.log("is", isAuthenticated);
