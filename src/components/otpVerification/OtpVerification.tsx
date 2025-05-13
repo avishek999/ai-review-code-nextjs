@@ -28,8 +28,10 @@ const OtpVerification: React.FC<IOtpVerification> = ({
   const router = useRouter();
 
   const { revalidateAuth } = useAuthContext();
-  
+
   const onSubmit = async (data: OTPFormData) => {
+    console.log("data", data);
+
     const otp = Object.values(data).join("");
     const payload = {
       otp: otp,
@@ -71,6 +73,8 @@ const OtpVerification: React.FC<IOtpVerification> = ({
               maxLength={1}
               {...register(`otp${index + 1}` as keyof OTPFormData)}
               ref={(el) => {
+                const name = `otp${index + 1}` as keyof OTPFormData; 
+                register(name).ref(el)
                 inputRefs.current[index] = el!;
               }}
               onChange={(e) => {
