@@ -30,9 +30,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const res = isAuth;
-
-    console.log("res", res);
-
     if (res.data?.status === true) {
       setIsAuthenticated(true);
     } else {

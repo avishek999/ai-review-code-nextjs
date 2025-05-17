@@ -69,7 +69,7 @@ const ChatScreen: React.FC<IchatMessage> = ({
       {getCodeAfterReview.feedback?.errors.length !== 0 ||
       getCodeAfterReview.feedback?.improvements.length !== 0 ||
       getCodeAfterReview.feedback?.warnings.length !== 0 ? (
-        <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[400px] pb-56 relative">
+        <CustomScrollbar className="flex flex-col gap-3 mt-5 overflow-auto h-[60%] pb-56 relative">
           {getCodeAfterReview.feedback?.errors.map((error, index) => (
             <div
               className=" bg-[var(--error-background-color)] px-4 py-5 "
@@ -153,19 +153,15 @@ const ChatScreen: React.FC<IchatMessage> = ({
 
       {/* ===================== send input ===================== */}
 
-      <div className="fixed bottom-0  w-full pt-4 border-t border-[var(--secondary-text-color)] bg-[#111825]">
+      <div className=" absolute bottom-0 left-0  w-[95%] pt-4 border-t border-[var(--secondary-text-color)] bg-[#111825] translate-x-[10px]">
         <div className="py-3 flex flex-col items-center bg-[var(--secondary-background-color)]">
           <div className="flex w-full justify-center items-center">
-            <input
-              type="text"
+            <textarea
               placeholder="Ask AI about the code"
-              className="w-full outline-none bg-[var(--secondary-background-color)] transform translate-x-4"
+              className=" outline-none bg-[var(--secondary-background-color)]  w-[90%] h-[30px]"
               onChange={(e) => setMessage(e.target.value)}
             />
           </div>
-
-          {/* Display input value */}
-          <div className="mt-2 text-sm text-[var(--primary-text-color)]"></div>
         </div>
       </div>
     </div>

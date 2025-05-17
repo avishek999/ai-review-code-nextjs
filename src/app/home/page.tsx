@@ -13,6 +13,7 @@ import { QUERY_REVIEWED_CODE_KEY } from "@/constants/query.constant";
 import Loader from "@/components/loader/Loader";
 import EditorSpinnerLoaderd from "@/components/loader/EditorSpinnerLoaderd";
 import ProtectedRoute from "@/protectedRoutes/ProtectedRoute";
+import Image from "next/image";
 
 const Home: React.FC = () => {
   const [Fullcode, setCode] = useState("");
@@ -107,45 +108,60 @@ const Home: React.FC = () => {
   return (
     <>
       <ProtectedRoute>
-      <HomeNavBar handlePrintCode={handlePrintCode} />
-      <div className="flex h-[calc(100%-76.8px)] flex-col md:flex-row">
-        <div className="w-[20%] hidden md:block    ">
-          <SideBar
-            getAllCodeByUSerId={getAllCodeByUSerId.data || []}
-            setCodeAfterReview={setCodeAfterReview}
-            setSelectedId={setSelectedId}
-            selectedId={selectedId ?? ""}
-          />
-        </div>
+        <HomeNavBar handlePrintCode={handlePrintCode} />
+        <div className=" home_page flex h-[calc(100%-76.8px)] flex-col md:flex-row">
+          <div className="w-[20%] hidden md:block    ">
+            <SideBar
+              getAllCodeByUSerId={getAllCodeByUSerId.data || []}
+              setCodeAfterReview={setCodeAfterReview}
+              setSelectedId={setSelectedId}
+              selectedId={selectedId ?? ""}
+            />
+          </div>
 
-        <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
-          <div className=" h-full">
-            {createMutation.isPending || updateMutation.isPending ? (
-              <EditorSpinnerLoaderd />
-            ) : (
-              <Editor
-                height="100%"
-                defaultLanguage="javascript"
-                defaultValue={getCodeAfterReview?.improvedCode}
-                value={getCodeAfterReview?.improvedCode}
-                theme="customTheme"
-                onChange={(value) => setCode(value || "")}
-                options={{
-                  minimap: { enabled: false },
-                  readOnly: false,
-                }}
-              />
-            )}
+          <div className="w-[55%]  p-5  pb-0 bg-[#030712]  ">
+            <div className=" h-full">
+              {createMutation.isPending || updateMutation.isPending ? (
+                <EditorSpinnerLoaderd />
+              ) : (
+                <Editor
+                  height="100%"
+                  defaultLanguage="javascript"
+                  defaultValue={getCodeAfterReview?.improvedCode}
+                  value={getCodeAfterReview?.improvedCode}
+                  theme="customTheme"
+                  onChange={(value) => setCode(value || "")}
+                  options={{
+                    minimap: { enabled: false },
+                    readOnly: false,
+                  }}
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="w-[25%] h-full  hidden md:block   ">
+            <ChatScreen
+              setMessage={setMessage}
+              getCodeAfterReview={getCodeAfterReview}
+            />
           </div>
         </div>
 
-        <div className="w-[25%] h-full  hidden md:block   ">
-          <ChatScreen
-            setMessage={setMessage}
-            getCodeAfterReview={getCodeAfterReview}
-          />
+        <div className="block md:hidden h-[calc(100%-76.8px)]">
+          <div className="flex justify-center items-center h-full  ">
+            <Image
+              src={"/Images/home-page/mobile.webp"}
+              alt=""
+              width={1200}
+              height={1200}
+            />
+            {/* <h1 className="text-center w-[80%]">
+              This application is not available on mobile devices. Please use a
+              desktop or larger screen to continue.
+            </h1> */}
+          </div>
         </div>
-      </div>
       </ProtectedRoute>
     </>
   );
