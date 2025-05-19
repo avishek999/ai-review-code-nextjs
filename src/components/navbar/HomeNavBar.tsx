@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BsFillGearFill } from "react-icons/bs";
 import { FaCode } from "react-icons/fa6";
-import { MdHistory } from "react-icons/md";
 import AnimatedReviewButton from "../buttons/RunButton";
 import { logoutUserAPi } from "@/services/api";
 import { useRouter } from "next/navigation";
@@ -28,15 +27,12 @@ const HomeNavBar: React.FC<IHomeNav> = ({ handlePrintCode }) => {
           <FaCode size={30} className="text-[var(--icon-color)]" />
           CodeReviewAI
         </div>
-        <div className="flex items-center gap-3 text-md">
-          <div className="flex items-center gap-2   text-[var(--secondary-color)]   cursor-pointer  ">
+        <div className="flex items-center gap-3 text-md ">
+          <div className="flex items-center gap-2   text-[var(--secondary-color)]   cursor-pointer ">
             <FaCode />
             Editor
           </div>
-          <div className="text-[var(--secondary-text-color)] flex items-center gap-2 cursor-pointer">
-            <MdHistory />
-            History
-          </div>
+
           <div className="relative inline-block">
             <div
               className="text-[var(--secondary-text-color)] flex items-center gap-2 cursor-pointer"

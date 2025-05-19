@@ -56,4 +56,14 @@ html {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+
+
+@media (max-width: 768px) {
+.home_page{
+  display: none;
+}
+}
+
+
 /* https: ; //coolors.co/374151-111827-1f2937-1f2937-fefefe */
